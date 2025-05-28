@@ -1,4 +1,4 @@
-# Welcome to your Lovable project
+# Welcome to Civic and Citizenship Education Alliance Website
 
 ## Project info
 
