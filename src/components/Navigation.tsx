@@ -12,7 +12,9 @@ import {
   Calendar, 
   BookOpen, 
   Mail, 
-  UserCheck 
+  UserCheck,
+  Building,
+  Shield
 } from 'lucide-react';
 
 const Navigation = () => {
@@ -27,6 +29,8 @@ const Navigation = () => {
     { name: 'Resources', href: '/resources', icon: BookOpen },
     { name: 'Events', href: '/events', icon: Calendar },
     { name: 'Members', href: '/members', icon: Users },
+    { name: 'Team', href: '/team', icon: Building },
+    { name: 'Governance', href: '/governance', icon: Shield },
     { name: 'Contact', href: '/contact', icon: Mail }
   ];
 
@@ -64,7 +68,7 @@ const Navigation = () => {
               </Link>
             ))}
             <Button className="ml-4 bg-blue-600 hover:bg-blue-700">
-              Join Alliance
+              <Link to="/membership">Join Alliance</Link>
             </Button>
           </div>
 
@@ -101,7 +105,7 @@ const Navigation = () => {
               ))}
               <div className="px-3 py-2">
                 <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                  Join Alliance
+                  <Link to="/membership">Join Alliance</Link>
                 </Button>
               </div>
             </div>

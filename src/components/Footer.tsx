@@ -48,13 +48,13 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Support */}
+          {/* Organization */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Support</h3>
+            <h3 className="text-lg font-semibold mb-4">Organization</h3>
             <ul className="space-y-2">
-              <li><Link to="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</Link></li>
               <li><Link to="/team" className="text-gray-300 hover:text-white transition-colors">Our Team</Link></li>
               <li><Link to="/governance" className="text-gray-300 hover:text-white transition-colors">Governance</Link></li>
+              <li><Link to="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</Link></li>
               <li><Link to="/impressum" className="text-gray-300 hover:text-white transition-colors">Impressum</Link></li>
             </ul>
           </div>

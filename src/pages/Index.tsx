@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -115,8 +114,8 @@ const Index = () => {
             </div>
             <div className="relative">
               <img 
-                src="/lovable-uploads/993c31cf-6130-4733-8968-6b53004996e7.png"
-                alt="Civic Education in Action"
+                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                alt="Students in civic education classroom discussion"
                 className="rounded-lg shadow-xl w-full h-auto"
               />
             </div>
@@ -190,8 +189,10 @@ const Index = () => {
                 <CardContent>
                   <p className="text-gray-700 mb-4">{article.excerpt}</p>
                   <Button variant="ghost" size="sm">
-                    Read More
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                    <Link to={`/articles/${index + 1}`} className="flex items-center">
+                      Read More
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
                   </Button>
                 </CardContent>
               </Card>
@@ -231,8 +232,10 @@ const Index = () => {
                     <p><strong>Location:</strong> {event.location}</p>
                   </div>
                   <Button variant="ghost" size="sm" className="mt-4">
-                    Learn More
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                    <Link to={`/events/${index + 1}`} className="flex items-center">
+                      Learn More
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
                   </Button>
                 </CardContent>
               </Card>
