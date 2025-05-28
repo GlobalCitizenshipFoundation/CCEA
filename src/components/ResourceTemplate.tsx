@@ -70,7 +70,7 @@ const ResourceTemplate: React.FC<ResourceTemplateProps> = ({ resource }) => {
 
           <div className="flex items-center space-x-2">
             {resource.fileType && resource.fileSize && (
-              <Badge variant="outline" className="text-xs">
+              <Badge variant="outline\" className="text-xs">
                 <FileText className="h-3 w-3 mr-1" />
                 {resource.fileType.toUpperCase()} • {resource.fileSize}
               </Badge>
