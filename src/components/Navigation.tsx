@@ -15,7 +15,8 @@ import {
   UserCheck,
   Building,
   Shield,
-  ChevronDown
+  ChevronDown,
+  ScrollText
 } from 'lucide-react';
 
 const Navigation = () => {
@@ -62,7 +63,8 @@ const Navigation = () => {
       dropdown: 'team',
       items: [
         { name: 'Our Team', href: '/team', icon: Building },
-        { name: 'Governance', href: '/governance', icon: Shield }
+        { name: 'Governance', href: '/governance', icon: Shield },
+        { name: 'Governance Charter', href: '/governance-charter', icon: ScrollText }
       ]
     },
     { name: 'Contact', href: '/contact', icon: Mail }
@@ -80,8 +82,12 @@ const Navigation = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">C</span>
+              <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-gray-200">
+                <img 
+                  src="/lovable-uploads/9fe4bf5c-153e-4db8-a758-19dbd5b2bf54.png" 
+                  alt="CCEA Logo" 
+                  className="w-8 h-8"
+                />
               </div>
               <div className="hidden sm:block">
                 <span className="text-xl font-semibold text-gray-900">CCEA</span>
@@ -103,6 +109,9 @@ const Navigation = () => {
                           ? 'bg-blue-50 text-blue-700'
                           : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
                       }`}
+                      aria-label={`${item.name} menu`}
+                      aria-expanded={dropdowns[item.dropdown as keyof typeof dropdowns]}
+                      aria-haspopup="true"
                     >
                       {item.name}
                       <ChevronDown className="ml-1 h-4 w-4" />
@@ -142,7 +151,7 @@ const Navigation = () => {
                 )}
               </div>
             ))}
-            <Button className="ml-4 bg-blue-600 hover:bg-blue-700">
+            <Button className="ml-4 bg-blue-600 hover:bg-blue-700" asChild>
               <Link to="/membership">Join Alliance</Link>
             </Button>
           </div>
@@ -153,6 +162,8 @@ const Navigation = () => {
               variant="ghost"
               size="sm"
               onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={isOpen}
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
@@ -174,6 +185,8 @@ const Navigation = () => {
                             ? 'bg-blue-50 text-blue-700'
                             : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
                         }`}
+                        aria-label={`${item.name} menu`}
+                        aria-expanded={dropdowns[item.dropdown as keyof typeof dropdowns]}
                       >
                         <div className="flex items-center">
                           <item.icon className="h-5 w-5 mr-3" />
@@ -221,7 +234,7 @@ const Navigation = () => {
                 </div>
               ))}
               <div className="px-3 py-2">
-                <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                <Button className="w-full bg-blue-600 hover:bg-blue-700" asChild>
                   <Link to="/membership">Join Alliance</Link>
                 </Button>
               </div>

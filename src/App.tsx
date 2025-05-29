@@ -309,6 +309,7 @@ const App = () => (
             }} />
           } />
           <Route path="/governance" element={<Governance />} />
+          <Route path="/governance-charter" element={<GovernanceCharter />} />
           <Route path="/impressum" element={<Impressum />} />
           <Route path="/contact" element={<Contact />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

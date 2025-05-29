@@ -1,8 +1,35 @@
+
 {
-  "type": "Page",
   "title": "Welcome to CCEA",
-  "description": "Empowering global citizens through civic education",
-  "featuredImage": "/images/home-hero.jpg",
-  "content": "# Welcome to CCEA\n\nThe Civic and Citizenship Education Alliance is your partner in building stronger, more engaged communities through comprehensive civic education.\n\n## Our Impact\n\nWe work with educators, institutions, and communities worldwide to develop and implement effective civic education programs that foster democratic participation and global citizenship.",
-  "lastUpdated": "2025-05-28 05:11:11"
+  "subtitle": "Civic and Citizenship Education Alliance",
+  "heroImage": "/placeholder.svg",
+  "description": "Join a global network of K-12 schools, universities, and organizations committed to transforming civic and citizenship education across diverse local and national contexts.",
+  "callToAction": {
+    "text": "Join our Alliance",
+    "link": "/membership"
+  },
+  "sections": {
+    "mission": {
+      "title": "Our Mission",
+      "content": "To strengthen civic and citizenship education globally through collaborative research, professional development, and innovative practices that prepare learners for active democratic participation."
+    },
+    "impact": {
+      "title": "Global Impact",
+      "stats": [
+        {
+          "number": "150+",
+          "label": "Member Institutions"
+        },
+        {
+          "number": "45",
+          "label": "Countries Represented"
+        },
+        {
+          "number": "10,000+",
+          "label": "Educators Reached"
+        }
+      ]
+    }
+  },
+  "lastUpdated": "2024-12-29"
 }
