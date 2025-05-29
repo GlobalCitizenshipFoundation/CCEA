@@ -5,15 +5,17 @@ import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
 import { navigationItems } from './NavigationItems';
 
+interface DropdownState {
+  membership: boolean;
+  team: boolean;
+  content: boolean;
+}
+
 interface MobileNavigationProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  dropdowns: {
-    membership: boolean;
-    team: boolean;
-    content: boolean;
-  };
-  toggleDropdown: (dropdown: keyof typeof dropdowns) => void;
+  dropdowns: DropdownState;
+  toggleDropdown: (dropdown: keyof DropdownState) => void;
   isActive: (path: string) => boolean;
   isDropdownActive: (items: any[]) => boolean;
 }
@@ -36,25 +38,25 @@ const MobileNavigation = ({
             {item.dropdown ? (
               <div>
                 <button
-                  onClick={() => toggleDropdown(item.dropdown as keyof typeof dropdowns)}
+                  onClick={() => toggleDropdown(item.dropdown as keyof DropdownState)}
                   className={`flex items-center justify-between w-full px-3 py-2 rounded-md text-base font-medium transition-colors ${
                     isDropdownActive(item.items || [])
                       ? 'bg-blue-50 text-blue-700'
                       : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
                   }`}
                   aria-label={`${item.name} menu`}
-                  aria-expanded={dropdowns[item.dropdown as keyof typeof dropdowns]}
+                  aria-expanded={dropdowns[item.dropdown as keyof DropdownState]}
                 >
                   <div className="flex items-center">
                     <item.icon className="h-5 w-5 mr-3" />
                     {item.name}
                   </div>
                   <ChevronDown className={`h-4 w-4 transform transition-transform ${
-                    dropdowns[item.dropdown as keyof typeof dropdowns] ? 'rotate-180' : ''
+                    dropdowns[item.dropdown as keyof DropdownState] ? 'rotate-180' : ''
                   }`} />
                 </button>
                 
-                {dropdowns[item.dropdown as keyof typeof dropdowns] && (
+                {dropdowns[item.dropdown as keyof DropdownState] && (
                   <div className="pl-6 space-y-1">
                     {item.items?.map((subItem) => (
                       <Link

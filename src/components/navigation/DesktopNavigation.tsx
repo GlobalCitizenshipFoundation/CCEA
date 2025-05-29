@@ -5,13 +5,15 @@ import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
 import { navigationItems } from './NavigationItems';
 
+interface DropdownState {
+  membership: boolean;
+  team: boolean;
+  content: boolean;
+}
+
 interface DesktopNavigationProps {
-  dropdowns: {
-    membership: boolean;
-    team: boolean;
-    content: boolean;
-  };
-  toggleDropdown: (dropdown: keyof typeof dropdowns) => void;
+  dropdowns: DropdownState;
+  toggleDropdown: (dropdown: keyof DropdownState) => void;
 }
 
 const DesktopNavigation = ({ dropdowns, toggleDropdown }: DesktopNavigationProps) => {
@@ -30,21 +32,21 @@ const DesktopNavigation = ({ dropdowns, toggleDropdown }: DesktopNavigationProps
           {item.dropdown ? (
             <div className="relative">
               <button
-                onClick={() => toggleDropdown(item.dropdown as keyof typeof dropdowns)}
+                onClick={() => toggleDropdown(item.dropdown as keyof DropdownState)}
                 className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                   isDropdownActive(item.items || [])
                     ? 'bg-blue-50 text-blue-700'
                     : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
                 }`}
                 aria-label={`${item.name} menu`}
-                aria-expanded={dropdowns[item.dropdown as keyof typeof dropdowns]}
+                aria-expanded={dropdowns[item.dropdown as keyof DropdownState]}
                 aria-haspopup="true"
               >
                 {item.name}
                 <ChevronDown className="ml-1 h-4 w-4" />
               </button>
               
-              {dropdowns[item.dropdown as keyof typeof dropdowns] && (
+              {dropdowns[item.dropdown as keyof DropdownState] && (
                 <div className="absolute top-full left-0 mt-1 w-56 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-50">
                   {item.items?.map((subItem) => (
                     <Link
@@ -55,7 +57,7 @@ const DesktopNavigation = ({ dropdowns, toggleDropdown }: DesktopNavigationProps
                           ? 'bg-blue-50 text-blue-700'
                           : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
                       }`}
-                      onClick={() => toggleDropdown(item.dropdown as keyof typeof dropdowns)}
+                      onClick={() => toggleDropdown(item.dropdown as keyof DropdownState)}
                     >
                       <subItem.icon className="h-4 w-4 mr-3" />
                       {subItem.name}
