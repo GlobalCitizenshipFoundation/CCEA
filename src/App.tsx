@@ -14,6 +14,7 @@ import Events from "./pages/Events";
 import Members from "./pages/Members";
 import Team from "./pages/Team";
 import Governance from "./pages/Governance";
+import GovernanceCharter from "./pages/GovernanceCharter";
 import Impressum from "./pages/Impressum";
 import NotFound from "./pages/NotFound";
 

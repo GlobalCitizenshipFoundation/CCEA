@@ -1,10 +1,9 @@
-
 import React from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ScrollText, Users, Shield, FileText, Scale, Award } from 'lucide-react';
+import { ScrollText, Users, Shield, FileText, Scale, Award, Building } from 'lucide-react';
 
 const GovernanceCharter = () => {
   return (
