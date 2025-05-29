@@ -10,7 +10,8 @@ import {
   UserCheck,
   Building,
   Shield,
-  ScrollText
+  ScrollText,
+  Palette
 } from 'lucide-react';
 
 export const navigationItems = [
@@ -22,7 +23,8 @@ export const navigationItems = [
     dropdown: 'membership',
     items: [
       { name: 'Membership Information', href: '/membership', icon: UserCheck },
-      { name: 'All Members', href: '/members', icon: Users }
+      { name: 'All Members', href: '/members', icon: Users },
+      { name: 'Brand Guidelines', href: '/brand-guidelines', icon: Palette }
     ]
   },
   {

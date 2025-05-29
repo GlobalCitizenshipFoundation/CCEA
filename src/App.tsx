@@ -1,9 +1,8 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Membership from "./pages/Membership";
@@ -17,6 +16,7 @@ import Governance from "./pages/Governance";
 import GovernanceCharter from "./pages/GovernanceCharter";
 import Impressum from "./pages/Impressum";
 import NotFound from "./pages/NotFound";
+import BrandGuidelines from '@/pages/BrandGuidelines';
 
 // Template components for individual pages
 import ArticleTemplate from "./components/ArticleTemplate";
@@ -32,7 +32,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <Router>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
@@ -313,10 +313,11 @@ const App = () => (
           <Route path="/governance-charter" element={<GovernanceCharter />} />
           <Route path="/impressum" element={<Impressum />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/brand-guidelines" element={<BrandGuidelines />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
+      </Router>
     </TooltipProvider>
   </QueryClientProvider>
 );

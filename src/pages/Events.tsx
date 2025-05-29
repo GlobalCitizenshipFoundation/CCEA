@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -6,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Search, Calendar, MapPin, Clock, Users, ExternalLink } from 'lucide-react';
+import { Search, Calendar, MapPin, Clock, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Events = () => {
@@ -198,17 +197,11 @@ const Events = () => {
                         ></div>
                       </div>
                     </div>
-                    <div className="flex gap-2">
-                      <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-                        <Link to={`/events/${event.id}`}>
-                          Register Now
-                        </Link>
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        Learn More
-                      </Button>
-                    </div>
+                    <Button size="sm" className="bg-blue-600 hover:bg-blue-700" asChild>
+                      <Link to={`/events/${event.id}`}>
+                        View Event Details
+                      </Link>
+                    </Button>
                   </CardContent>
                 </Card>
               ))}
@@ -256,9 +249,9 @@ const Events = () => {
                       ></div>
                     </div>
                   </div>
-                  <Button variant="outline" size="sm" className="w-full">
+                  <Button variant="outline" size="sm" className="w-full" asChild>
                     <Link to={`/events/${event.id}`}>
-                      View Details
+                      View Event Details
                     </Link>
                   </Button>
                 </CardContent>
