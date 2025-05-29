@@ -12,7 +12,8 @@ const Navigation = () => {
   const [dropdowns, setDropdowns] = useState({
     membership: false,
     team: false,
-    content: false
+    content: false,
+    governance: false
   });
   const location = useLocation();
 
@@ -26,7 +27,12 @@ const Navigation = () => {
   const isActive = (path: string) => location.pathname === path;
 
   const isDropdownActive = (items: any[]) => {
-    return items.some(item => isActive(item.href));
+    return items.some(item => {
+      if (item.items) {
+        return item.items.some((subItem: any) => isActive(subItem.href));
+      }
+      return isActive(item.href);
+    });
   };
 
   return (

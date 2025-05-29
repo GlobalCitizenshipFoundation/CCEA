@@ -5,84 +5,121 @@ import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
 import { navigationItems } from './NavigationItems';
 
-interface DropdownState {
-  membership: boolean;
-  team: boolean;
-  content: boolean;
-}
-
 interface DesktopNavigationProps {
-  dropdowns: DropdownState;
-  toggleDropdown: (dropdown: keyof DropdownState) => void;
+  dropdowns: {
+    membership: boolean;
+    team: boolean;
+    content: boolean;
+    governance: boolean;
+  };
+  toggleDropdown: (dropdown: keyof typeof dropdowns) => void;
 }
 
-const DesktopNavigation = ({ dropdowns, toggleDropdown }: DesktopNavigationProps) => {
+const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ dropdowns, toggleDropdown }) => {
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname === path;
 
   const isDropdownActive = (items: any[]) => {
-    return items.some(item => isActive(item.href));
+    return items.some(item => {
+      if (item.items) {
+        return item.items.some((subItem: any) => isActive(subItem.href));
+      }
+      return isActive(item.href);
+    });
   };
 
   return (
-    <div className="hidden lg:flex items-center space-x-1">
-      {navigationItems.map((item) => (
-        <div key={item.name} className="relative">
-          {item.dropdown ? (
-            <div className="relative">
-              <button
-                onClick={() => toggleDropdown(item.dropdown as keyof DropdownState)}
-                className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  isDropdownActive(item.items || [])
-                    ? 'bg-blue-50 text-blue-700'
-                    : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
-                }`}
-                aria-label={`${item.name} menu`}
-                aria-expanded={dropdowns[item.dropdown as keyof DropdownState]}
+    <div className="hidden lg:flex lg:items-center lg:space-x-8">
+      {navigationItems.map((item) => {
+        if (item.dropdown) {
+          const dropdownKey = item.dropdown as keyof typeof dropdowns;
+          return (
+            <div key={item.name} className="relative">
+              <Button
+                variant="ghost"
+                className={`flex items-center space-x-1 ${
+                  isDropdownActive(item.items || []) ? 'text-blue-600' : 'text-gray-700'
+                } hover:text-blue-600`}
+                onClick={() => toggleDropdown(dropdownKey)}
                 aria-haspopup="true"
+                aria-expanded={dropdowns[dropdownKey]}
               >
-                {item.name}
-                <ChevronDown className="ml-1 h-4 w-4" />
-              </button>
+                <item.icon className="h-4 w-4" />
+                <span>{item.name}</span>
+                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns[dropdownKey] ? 'rotate-180' : ''}`} />
+              </Button>
               
-              {dropdowns[item.dropdown as keyof DropdownState] && (
-                <div className="absolute top-full left-0 mt-1 w-56 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-50">
-                  {item.items?.map((subItem) => (
-                    <Link
-                      key={subItem.name}
-                      to={subItem.href}
-                      className={`flex items-center px-4 py-2 text-sm transition-colors ${
-                        isActive(subItem.href)
-                          ? 'bg-blue-50 text-blue-700'
-                          : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
-                      }`}
-                      onClick={() => toggleDropdown(item.dropdown as keyof DropdownState)}
-                    >
-                      <subItem.icon className="h-4 w-4 mr-3" />
-                      {subItem.name}
-                    </Link>
-                  ))}
+              {dropdowns[dropdownKey] && (
+                <div className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                  <div className="py-2">
+                    {item.items?.map((subItem, index) => {
+                      if (subItem.items) {
+                        // Handle nested items (like in CCEA Governance)
+                        return (
+                          <div key={index} className="px-3 py-2">
+                            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                              {subItem.name}
+                            </div>
+                            {subItem.items.map((nestedItem: any, nestedIndex: number) => (
+                              <Link
+                                key={nestedIndex}
+                                to={nestedItem.href}
+                                className={`flex items-center px-3 py-2 text-sm rounded-md transition-colors ${
+                                  isActive(nestedItem.href)
+                                    ? 'bg-blue-50 text-blue-600'
+                                    : 'text-gray-700 hover:bg-gray-50'
+                                }`}
+                                onClick={() => toggleDropdown(dropdownKey)}
+                              >
+                                <nestedItem.icon className="h-4 w-4 mr-3" />
+                                {nestedItem.name}
+                              </Link>
+                            ))}
+                          </div>
+                        );
+                      } else {
+                        // Handle regular items
+                        return (
+                          <Link
+                            key={index}
+                            to={subItem.href}
+                            className={`flex items-center px-4 py-2 text-sm transition-colors ${
+                              isActive(subItem.href)
+                                ? 'bg-blue-50 text-blue-600'
+                                : 'text-gray-700 hover:bg-gray-50'
+                            }`}
+                            onClick={() => toggleDropdown(dropdownKey)}
+                          >
+                            <subItem.icon className="h-4 w-4 mr-3" />
+                            {subItem.name}
+                          </Link>
+                        );
+                      }
+                    })}
+                  </div>
                 </div>
               )}
             </div>
-          ) : (
-            <Link
-              to={item.href}
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                isActive(item.href)
-                  ? 'bg-blue-50 text-blue-700'
-                  : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
-              }`}
+          );
+        } else {
+          return (
+            <Button
+              key={item.name}
+              variant="ghost"
+              className={`flex items-center space-x-1 ${
+                isActive(item.href) ? 'text-blue-600' : 'text-gray-700'
+              } hover:text-blue-600`}
+              asChild
             >
-              {item.name}
-            </Link>
-          )}
-        </div>
-      ))}
-      <Button className="ml-4 bg-blue-600 hover:bg-blue-700" asChild>
-        <Link to="/membership">Join Alliance</Link>
-      </Button>
+              <Link to={item.href}>
+                <item.icon className="h-4 w-4" />
+                <span>{item.name}</span>
+              </Link>
+            </Button>
+          );
+        }
+      })}
     </div>
   );
 };

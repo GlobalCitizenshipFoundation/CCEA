@@ -11,20 +11,20 @@ import {
   Building,
   Shield,
   ScrollText,
-  Palette
+  Palette,
+  Scale
 } from 'lucide-react';
 
 export const navigationItems = [
   { name: 'Home', href: '/', icon: Home },
-  { name: 'About Us', href: '/about', icon: Info },
   {
-    name: 'Members & Membership',
+    name: 'Membership',
     icon: UserCheck,
     dropdown: 'membership',
     items: [
       { name: 'Membership Information', href: '/membership', icon: UserCheck },
       { name: 'All Members', href: '/members', icon: Users },
-      { name: 'Brand Guidelines', href: '/brand-guidelines', icon: Palette }
+      { name: 'Using CCEA Brand by Members', href: '/brand-guidelines', icon: Palette }
     ]
   },
   {
@@ -38,13 +38,25 @@ export const navigationItems = [
   },
   { name: 'Events', href: '/events', icon: Calendar },
   {
-    name: 'Team & Governance',
-    icon: Building,
-    dropdown: 'team',
+    name: 'CCEA Governance',
+    icon: Scale,
+    dropdown: 'governance',
     items: [
-      { name: 'Our Team', href: '/team', icon: Building },
-      { name: 'Governance', href: '/governance', icon: Shield },
-      { name: 'Governance Charter', href: '/governance-charter', icon: ScrollText }
+      {
+        name: 'About CCEA',
+        items: [
+          { name: 'About Us', href: '/about', icon: Info },
+          { name: 'Our Team', href: '/team', icon: Building },
+          { name: 'Governance', href: '/governance', icon: Shield }
+        ]
+      },
+      {
+        name: 'About Governance',
+        items: [
+          { name: 'Governance Charter', href: '/governance-charter', icon: ScrollText },
+          { name: 'Brand Guidelines', href: '/brand-guidelines', icon: Palette }
+        ]
+      }
     ]
   },
   { name: 'Contact', href: '/contact', icon: Mail }
