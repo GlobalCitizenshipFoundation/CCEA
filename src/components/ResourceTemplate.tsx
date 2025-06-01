@@ -1,372 +1,195 @@
-
 import React from 'react';
-import { format } from 'date-fns';
-import { Card, CardContent } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
+import { Download, Eye, Calendar, User, Users, Tag, Share2, FileText, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import { 
-  Download, 
-  FileText, 
-  Calendar, 
-  User, 
-  ExternalLink, 
-  Eye,
-  Share2,
-  ChevronRight,
-  Star,
-  Users,
-  Globe,
-  Lock
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import Navigation from './Navigation';
+import Footer from './Footer';
+
+interface Author {
+  name: string;
+  title?: string;
+  profileImage?: string;
+}
+
+interface Contributor {
+  name: string;
+  title?: string;
+}
+
+interface License {
+  type: string;
+  url: string;
+  attribution: string;
+}
+
+interface RelatedResource {
+  title: string;
+  resourceType: string;
+  slug: string;
+  thumbnail?: string;
+}
+
+interface FileInfo {
+  fileType: string;
+  fileSize: string;
+  downloadUrl: string;
+  previewUrl?: string;
+}
+
+interface Resource {
+  title: string;
+  description: string;
+  resourceType: string;
+  category: string;
+  subcategory?: string;
+  accessType: string;
+  fileInfo: FileInfo;
+  downloadCount?: number;
+  content: string;
+  lastUpdated: string;
+  thumbnail?: string;
+  author: Author;
+  contributors?: Contributor[];
+  license?: License;
+  relatedResources?: RelatedResource[];
+  featured?: boolean;
+}
 
 interface ResourceTemplateProps {
-  resource: {
-    title: string;
-    description: string;
-    resourceType: string;
-    category: string;
-    subcategory?: string;
-    accessType: 'free' | 'members-only' | 'premium';
-    fileInfo?: {
-      fileType?: string;
-      fileSize?: string;
-      downloadUrl?: string;
-      previewUrl?: string;
-      externalUrl?: string;
-    };
-    downloadCount: number;
-    content: string;
-    lastUpdated: string;
-    thumbnail?: string;
-    gallery?: string[];
-    author?: {
-      name: string;
-      title: string;
-      profileImage?: string;
-    };
-    contributors?: Array<{
-      name: string;
-      title: string;
-    }>;
-    license?: {
-      type: string;
-      url?: string;
-      attribution?: string;
-    };
-    relatedResources?: Array<{
-      title: string;
-      resourceType: string;
-      slug: string;
-      thumbnail?: string;
-    }>;
-    featured?: boolean;
-  };
+  resource: Resource;
 }
 
 const ResourceTemplate: React.FC<ResourceTemplateProps> = ({ resource }) => {
   const handleDownload = () => {
-    if (resource.fileInfo?.downloadUrl) {
-      window.open(resource.fileInfo.downloadUrl, '_blank');
-    }
+    console.log(`Downloading ${resource.title} from ${resource.fileInfo.downloadUrl}`);
+    // Implement download logic here, e.g., using window.location.href or a download library
   };
 
   const handlePreview = () => {
-    if (resource.fileInfo?.previewUrl) {
+    if (resource.fileInfo.previewUrl) {
       window.open(resource.fileInfo.previewUrl, '_blank');
+    } else {
+      console.log('No preview available for this resource.');
     }
   };
 
-  const getAccessIcon = () => {
-    switch (resource.accessType) {
-      case 'members-only':
-        return <Users className="h-4 w-4" />;
-      case 'premium':
-        return <Star className="h-4 w-4" />;
-      default:
-        return <Globe className="h-4 w-4" />;
-    }
-  };
-
-  const getAccessColor = () => {
-    switch (resource.accessType) {
-      case 'members-only':
-        return 'bg-blue-100 text-blue-800';
-      case 'premium':
-        return 'bg-amber-100 text-amber-800';
-      default:
-        return 'bg-green-100 text-green-800';
-    }
+  const handleShare = () => {
+    const shareUrl = window.location.href;
+    navigator.clipboard.writeText(shareUrl)
+      .then(() => alert('Link copied to clipboard!'))
+      .catch(err => console.error('Could not copy text: ', err));
   };
 
   return (
-    <article className="max-w-4xl mx-auto px-4 py-12">
-      {/* Breadcrumb */}
-      <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
-        <Link to="/" className="hover:text-blue-600">Home</Link>
-        <ChevronRight className="h-4 w-4" />
-        <Link to="/resources" className="hover:text-blue-600">Resources</Link>
-        <ChevronRight className="h-4 w-4" />
-        <span className="text-gray-900">{resource.title}</span>
-      </nav>
-
-      {/* Resource Header */}
-      <header className="mb-12">
-        <div className="flex flex-wrap gap-2 mb-4">
-          <Badge variant="secondary" className="bg-purple-100 text-purple-800">
-            {resource.resourceType}
-          </Badge>
-          <Badge variant="outline">{resource.category}</Badge>
-          {resource.subcategory && (
-            <Badge variant="outline">{resource.subcategory}</Badge>
-          )}
-          <Badge className={getAccessColor()}>
-            <span className="flex items-center">
-              {getAccessIcon()}
-              <span className="ml-1 capitalize">{resource.accessType.replace('-', ' ')}</span>
-            </span>
-          </Badge>
-          {resource.featured && (
-            <Badge className="bg-gold-100 text-gold-800">Featured</Badge>
-          )}
-        </div>
-
-        <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-          {resource.title}
-        </h1>
-
-        <p className="text-xl text-gray-600 mb-8">{resource.description}</p>
-
-        <div className="flex flex-wrap items-center justify-between border-y border-gray-200 py-4 gap-4">
-          <div className="flex items-center space-x-6">
-            {resource.author && (
-              <div className="flex items-center">
-                <User className="h-4 w-4 mr-2 text-gray-500" />
-                <span className="text-sm text-gray-600">{resource.author.name}</span>
-              </div>
-            )}
-            <div className="flex items-center">
-              <Calendar className="h-4 w-4 mr-2 text-gray-500" />
-              <span className="text-sm text-gray-600">
-                Updated {format(new Date(resource.lastUpdated), 'MMM d, yyyy')}
-              </span>
-            </div>
-            <div className="flex items-center">
-              <Download className="h-4 w-4 mr-2 text-gray-500" />
-              <span className="text-sm text-gray-600">
-                {resource.downloadCount.toLocaleString()} downloads
-              </span>
+    <div className="min-h-screen bg-gray-50">
+      <Navigation />
+      
+      <main className="pt-6">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Resource Header */}
+          <div className="mb-8">
+            <h1 className="text-3xl font-semibold text-gray-900">{resource.title}</h1>
+            <p className="text-gray-500 mt-2">{resource.description}</p>
+            <div className="flex items-center space-x-2 mt-4">
+              <Badge variant="secondary">{resource.resourceType}</Badge>
+              {resource.category && <Badge>{resource.category}</Badge>}
+              {resource.subcategory && <Badge>{resource.subcategory}</Badge>}
             </div>
           </div>
 
-          <div className="flex items-center space-x-2">
-            {resource.fileInfo?.fileType && resource.fileInfo?.fileSize && (
-              <Badge variant="outline" className="text-xs">
-                <FileText className="h-3 w-3 mr-1" />
-                {resource.fileInfo.fileType.toUpperCase()} • {resource.fileInfo.fileSize}
-              </Badge>
-            )}
-          </div>
-        </div>
-      </header>
+          {/* Resource Content */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle>Resource Details</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-2">
+                      <FileText className="h-4 w-4 text-gray-500" />
+                      <span>Type: {resource.fileInfo.fileType}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Download className="h-4 w-4 text-gray-500" />
+                      <span>Size: {resource.fileInfo.fileSize}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Calendar className="h-4 w-4 text-gray-500" />
+                      <span>Last Updated: {resource.lastUpdated}</span>
+                    </div>
+                    {resource.author && (
+                      <div className="flex items-center space-x-2">
+                        <User className="h-4 w-4 text-gray-500" />
+                        <span>Author: {resource.author.name}</span>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
 
-      {/* Resource Preview */}
-      {(resource.thumbnail || resource.gallery) && (
-        <div className="mb-12">
-          {resource.gallery && resource.gallery.length > 1 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {resource.gallery.slice(0, 4).map((image, index) => (
-                <Card key={index} className="overflow-hidden">
-                  <img
-                    src={image}
-                    alt={`${resource.title} preview ${index + 1}`}
-                    className="w-full h-48 object-cover hover:scale-105 transition-transform cursor-pointer"
-                  />
-                </Card>
-              ))}
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle>Content</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div dangerouslySetInnerHTML={{ __html: resource.content }} />
+                </CardContent>
+              </Card>
             </div>
-          ) : resource.thumbnail && (
-            <Card className="overflow-hidden">
-              <img
-                src={resource.thumbnail}
-                alt={resource.title}
-                className="w-full h-auto"
-              />
-            </Card>
-          )}
-        </div>
-      )}
 
-      {/* Access/Download Section */}
-      <div className="mb-12">
-        <Card className="border-2 border-blue-200">
-          <CardContent className="p-8">
-            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-              <div className="flex-1">
-                <h3 className="text-xl font-semibold mb-3">Access Resource</h3>
-                <div className="space-y-2 text-sm text-gray-600">
-                  {resource.fileInfo?.fileType && resource.fileInfo?.fileSize && (
-                    <p>Available as {resource.fileInfo.fileType.toUpperCase()} ({resource.fileInfo.fileSize})</p>
-                  )}
-                  <p className="flex items-center">
-                    {getAccessIcon()}
-                    <span className="ml-2 capitalize">{resource.accessType.replace('-', ' ')} access</span>
-                  </p>
-                  {resource.license && (
-                    <p>License: {resource.license.type}</p>
-                  )}
-                </div>
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-3">
-                {resource.fileInfo?.previewUrl && (
-                  <Button variant="outline" onClick={handlePreview}>
-                    <Eye className="h-4 w-4 mr-2" />
-                    Preview
-                  </Button>
-                )}
-                
-                {resource.fileInfo?.downloadUrl && (
-                  <Button onClick={handleDownload} className="bg-blue-600 hover:bg-blue-700">
+            {/* Sidebar */}
+            <div>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Actions</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <Button onClick={handleDownload} className="w-full" variant="secondary">
                     <Download className="h-4 w-4 mr-2" />
                     Download
                   </Button>
-                )}
-                
-                {resource.fileInfo?.externalUrl && (
-                  <Button 
-                    onClick={() => window.open(resource.fileInfo!.externalUrl, '_blank')}
-                    className="bg-green-600 hover:bg-green-700"
-                  >
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    Access Online
-                  </Button>
-                )}
-
-                <Button variant="outline" size="sm">
-                  <Share2 className="h-4 w-4 mr-2" />
-                  Share
-                </Button>
-              </div>
-            </div>
-
-            {resource.accessType !== 'free' && (
-              <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                <div className="flex items-center text-blue-800">
-                  <Lock className="h-4 w-4 mr-2" />
-                  <span className="text-sm font-medium">
-                    {resource.accessType === 'members-only' 
-                      ? 'This resource requires CCEA membership to access.' 
-                      : 'This is a premium resource requiring special access.'}
-                  </span>
-                </div>
-                {resource.accessType === 'members-only' && (
-                  <Button className="mt-3 bg-blue-600 hover:bg-blue-700" size="sm">
-                    <Link to="/membership">Become a Member</Link>
-                  </Button>
-                )}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Resource Content */}
-      <div className="prose prose-lg max-w-none mb-12">
-        <div dangerouslySetInnerHTML={{ __html: resource.content }} />
-      </div>
-
-      {/* Contributors */}
-      {resource.contributors && resource.contributors.length > 0 && (
-        <div className="mb-12">
-          <h3 className="text-lg font-semibold mb-4">Contributors</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {resource.contributors.map((contributor, index) => (
-              <div key={index} className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
-                  <User className="h-5 w-5 text-gray-600" />
-                </div>
-                <div>
-                  <p className="font-medium text-gray-900">{contributor.name}</p>
-                  <p className="text-sm text-gray-600">{contributor.title}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      <Separator className="my-12" />
-
-      {/* Related Resources */}
-      {resource.relatedResources && resource.relatedResources.length > 0 && (
-        <div className="mb-12">
-          <h3 className="text-2xl font-bold mb-8">Related Resources</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {resource.relatedResources.map((relatedResource, index) => (
-              <Card key={index} className="hover:shadow-md transition-shadow">
-                <Link to={`/resources/${relatedResource.slug}`}>
-                  {relatedResource.thumbnail && (
-                    <img 
-                      src={relatedResource.thumbnail} 
-                      alt={relatedResource.title}
-                      className="w-full h-32 object-cover rounded-t-lg"
-                    />
+                  {resource.fileInfo.previewUrl && (
+                    <Button onClick={handlePreview} className="w-full" variant="outline">
+                      <Eye className="h-4 w-4 mr-2" />
+                      Preview
+                    </Button>
                   )}
-                </Link>
-                <CardContent className="p-4">
-                  <Badge variant="outline" className="text-xs mb-2">
-                    {relatedResource.resourceType}
-                  </Badge>
-                  <h4 className="font-semibold line-clamp-2">
-                    <Link 
-                      to={`/resources/${relatedResource.slug}`}
-                      className="hover:text-blue-600 transition-colors"
-                    >
-                      {relatedResource.title}
-                    </Link>
-                  </h4>
+                  <Button onClick={handleShare} className="w-full" variant="ghost">
+                    <Share2 className="h-4 w-4 mr-2" />
+                    Share
+                  </Button>
                 </CardContent>
               </Card>
-            ))}
+
+              {resource.relatedResources && resource.relatedResources.length > 0 && (
+                <Card className="mt-8">
+                  <CardHeader>
+                    <CardTitle>Related Resources</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="list-none space-y-2">
+                      {resource.relatedResources.map(related => (
+                        <li key={related.slug}>
+                          <Link to={`/resources/${related.slug}`} className="text-blue-500 hover:underline">
+                            {related.title} ({related.resourceType})
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
           </div>
         </div>
-      )}
+      </main>
 
-      {/* Usage Guidelines & License */}
-      <div className="border-t border-gray-200 pt-8">
-        <h3 className="text-lg font-semibold mb-6">Usage Guidelines & License</h3>
-        <Card>
-          <CardContent className="p-6">
-            {resource.license ? (
-              <div className="mb-4">
-                <h4 className="font-medium mb-2">License Information</h4>
-                <p className="text-sm text-gray-600 mb-2">{resource.license.type}</p>
-                {resource.license.attribution && (
-                  <p className="text-sm text-gray-600">{resource.license.attribution}</p>
-                )}
-                {resource.license.url && (
-                  <Button variant="outline" size="sm" className="mt-2">
-                    <ExternalLink className="h-3 w-3 mr-2" />
-                    <a href={resource.license.url} target="_blank" rel="noopener noreferrer">
-                      View License
-                    </a>
-                  </Button>
-                )}
-              </div>
-            ) : (
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li>• This resource is provided for educational and non-commercial use</li>
-                <li>• Please cite the source when using this material</li>
-                <li>• Do not modify or redistribute without permission</li>
-                <li>• Contact us for commercial use inquiries</li>
-              </ul>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-    </article>
+      <Footer />
+    </div>
   );
 };
 

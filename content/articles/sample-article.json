@@ -1,0 +1,21 @@
+
+{
+  "title": "Advancing Civic Education in the Digital Age",
+  "slug": "advancing-civic-education-digital-age",
+  "excerpt": "Exploring how technology can enhance civic learning and democratic participation among students.",
+  "content": "<p>This article explores the intersection of technology and civic education, highlighting innovative approaches to democratic learning.</p><h2>Key Findings</h2><p>Our research shows significant improvements in student engagement when digital tools are properly integrated.</p>",
+  "author": {
+    "name": "Dr. Sarah Johnson",
+    "title": "Director of Civic Education Research",
+    "profileImage": "/placeholder.svg",
+    "bio": "Dr. Johnson is a leading expert in civic education with over 15 years of experience."
+  },
+  "publishDate": "2024-12-15T00:00:00Z",
+  "lastModified": "2024-12-20T00:00:00Z",
+  "categories": ["Digital Learning", "Research"],
+  "tags": ["civic education", "digital tools", "innovation"],
+  "readTime": 8,
+  "featuredImage": "/placeholder.svg",
+  "featured": true,
+  "dateCreated": "2024-01-01T00:00:00Z"
+}

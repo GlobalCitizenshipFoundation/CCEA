@@ -1,0 +1,30 @@
+
+{
+  "name": "Sample University",
+  "slug": "sample-university",
+  "memberType": "organization",
+  "membershipLevel": "full",
+  "title": "Leading Educational Institution",
+  "logo": "/placeholder.svg",
+  "description": "A premier educational institution dedicated to advancing civic education and democratic learning.",
+  "bio": "<p>Sample University has been at the forefront of civic education research and implementation for over two decades.</p>",
+  "location": {
+    "city": "Sample City",
+    "country": "Sample Country",
+    "region": "Sample Region"
+  },
+  "contactInfo": {
+    "email": "info@sampleuniversity.edu",
+    "website": "https://www.sampleuniversity.edu"
+  },
+  "memberSince": "2019-03-15",
+  "expertise": [
+    "Civic Education Research",
+    "Curriculum Development",
+    "Teacher Training"
+  ],
+  "featured": true,
+  "publicProfile": true,
+  "dateCreated": "2024-01-01T00:00:00Z",
+  "lastModified": "2024-01-01T00:00:00Z"
+}

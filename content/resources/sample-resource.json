@@ -1,0 +1,20 @@
+
+{
+  "title": "Civic Education Curriculum Framework",
+  "slug": "civic-education-curriculum-framework",
+  "description": "A comprehensive guide for developing civic education curricula across different educational levels.",
+  "resourceType": "guide",
+  "category": "Curriculum Development",
+  "subcategory": "Framework",
+  "accessType": "free",
+  "fileInfo": {
+    "fileType": "PDF",
+    "fileSize": "2.5 MB",
+    "downloadUrl": "/sample-resource.pdf"
+  },
+  "content": "<p>This comprehensive framework provides educators with practical guidance for developing effective civic education curricula.</p>",
+  "thumbnail": "/placeholder.svg",
+  "featured": true,
+  "dateCreated": "2024-01-01T00:00:00Z",
+  "lastModified": "2024-01-01T00:00:00Z"
+}

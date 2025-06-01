@@ -1,0 +1,29 @@
+
+{
+  "name": "Dr. Jane Smith",
+  "slug": "jane-smith",
+  "memberType": "individual",
+  "membershipLevel": "associate",
+  "title": "Civic Education Specialist",
+  "profileImage": "/placeholder.svg",
+  "description": "An experienced educator and researcher specializing in democratic learning and civic engagement.",
+  "bio": "<p>Dr. Smith brings over 15 years of experience in civic education to her work with students and communities.</p>",
+  "location": {
+    "city": "Academic City",
+    "country": "Sample Country",
+    "region": "Sample Region"
+  },
+  "contactInfo": {
+    "email": "jane.smith@email.com"
+  },
+  "memberSince": "2020-09-15",
+  "expertise": [
+    "Democratic Learning",
+    "Community Engagement",
+    "Youth Leadership"
+  ],
+  "featured": false,
+  "publicProfile": true,
+  "dateCreated": "2024-01-01T00:00:00Z",
+  "lastModified": "2024-01-01T00:00:00Z"
+}
