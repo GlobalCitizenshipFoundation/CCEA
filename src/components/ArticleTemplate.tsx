@@ -1,9 +1,12 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, Clock, User, Users, Tag, Share2, BookOpen, Copy } from 'lucide-react';
+import { format } from 'date-fns';
+import { Calendar, Clock, User, Users, Tag, Share2, BookOpen, Copy, ChevronRight, Twitter, Linkedin, Facebook, Mail, Bookmark } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 import Navigation from './Navigation';
 import Footer from './Footer';
 

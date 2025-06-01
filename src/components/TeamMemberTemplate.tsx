@@ -1,6 +1,7 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Globe, Mail, Phone, MapPin, Calendar, ExternalLink, Share2, Award, BookOpen, GraduationCap } from 'lucide-react';
+import { Globe, Mail, Phone, MapPin, Calendar, ExternalLink, Share2, Award, BookOpen, GraduationCap, ChevronRight, Clock, Linkedin, Twitter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';

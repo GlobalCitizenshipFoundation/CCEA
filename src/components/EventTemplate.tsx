@@ -1,7 +1,8 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
-import { Calendar, Clock, MapPin, Users, ExternalLink, Download, Globe, Share2 } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, ExternalLink, Download, Globe, Share2, ChevronRight, Video, User, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
