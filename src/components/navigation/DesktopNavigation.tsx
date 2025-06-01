@@ -12,7 +12,7 @@ interface DesktopNavigationProps {
     content: boolean;
     governance: boolean;
   };
-  toggleDropdown: (dropdown: keyof typeof dropdowns) => void;
+  toggleDropdown: (dropdown: keyof DesktopNavigationProps['dropdowns']) => void;
 }
 
 const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ dropdowns, toggleDropdown }) => {
@@ -30,7 +30,7 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ dropdowns, toggle
   };
 
   return (
-    <div className="hidden lg:flex lg:items-center lg:space-x-8">
+    <div className="hidden lg:flex lg:items-center lg:space-x-6">
       {navigationItems.map((item) => {
         if (item.dropdown) {
           const dropdownKey = item.dropdown as keyof typeof dropdowns;
@@ -38,7 +38,7 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ dropdowns, toggle
             <div key={item.name} className="relative">
               <Button
                 variant="ghost"
-                className={`flex items-center space-x-1 ${
+                className={`flex items-center space-x-1 px-3 py-2 text-sm ${
                   isDropdownActive(item.items || []) ? 'text-blue-600' : 'text-gray-700'
                 } hover:text-blue-600`}
                 onClick={() => toggleDropdown(dropdownKey)}
@@ -107,7 +107,7 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ dropdowns, toggle
             <Button
               key={item.name}
               variant="ghost"
-              className={`flex items-center space-x-1 ${
+              className={`flex items-center space-x-1 px-3 py-2 text-sm ${
                 isActive(item.href) ? 'text-blue-600' : 'text-gray-700'
               } hover:text-blue-600`}
               asChild

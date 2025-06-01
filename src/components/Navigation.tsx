@@ -38,27 +38,29 @@ const Navigation = () => {
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex items-center min-w-0 flex-1">
             <NavigationLogo />
           </div>
 
-          <DesktopNavigation 
-            dropdowns={dropdowns}
-            toggleDropdown={toggleDropdown}
-          />
+          <div className="flex items-center">
+            <DesktopNavigation 
+              dropdowns={dropdowns}
+              toggleDropdown={toggleDropdown}
+            />
 
-          {/* Mobile menu button */}
-          <div className="lg:hidden flex items-center">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
-              aria-expanded={isOpen}
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </Button>
+            {/* Mobile menu button */}
+            <div className="lg:hidden flex items-center ml-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsOpen(!isOpen)}
+                aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+                aria-expanded={isOpen}
+              >
+                {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </Button>
+            </div>
           </div>
         </div>
 

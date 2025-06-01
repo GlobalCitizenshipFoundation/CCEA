@@ -14,7 +14,7 @@ interface MobileNavigationProps {
     content: boolean;
     governance: boolean;
   };
-  toggleDropdown: (dropdown: keyof typeof dropdowns) => void;
+  toggleDropdown: (dropdown: keyof MobileNavigationProps['dropdowns']) => void;
   isActive: (path: string) => boolean;
   isDropdownActive: (items: any[]) => boolean;
 }
