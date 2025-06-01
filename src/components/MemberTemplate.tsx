@@ -1,10 +1,12 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Globe, Mail, Phone, MapPin, Calendar, ExternalLink, Share2, Users, Award } from 'lucide-react';
+import { Globe, Mail, Phone, MapPin, Calendar, ExternalLink, Share2, Users, Award, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useToast } from '@/hooks/use-toast';
 import Navigation from './Navigation';
 import Footer from './Footer';
 
@@ -42,17 +44,37 @@ interface MemberTemplateProps {
 }
 
 const MemberTemplate: React.FC<MemberTemplateProps> = ({ member }) => {
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: member.name,
-        text: member.description,
-        url: window.location.href,
-      })
-      .then(() => console.log('Successful share'))
-      .catch((error) => console.error('Error sharing', error));
+  const { toast } = useToast();
+
+  const handleShare = async (platform: string) => {
+    const shareUrl = window.location.href;
+    const title = encodeURIComponent(`${member.name} - CCEA Member`);
+    const text = encodeURIComponent(member.description);
+    
+    const shareUrls = {
+      twitter: `https://twitter.com/intent/tweet?text=${title}&url=${encodeURIComponent(shareUrl)}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}&title=${title}&summary=${text}`,
+      email: `mailto:?subject=${title}&body=${text}%0A%0A${shareUrl}`,
+      copy: shareUrl
+    };
+    
+    if (platform === 'copy') {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        toast({
+          title: "Link copied!",
+          description: "Member profile link has been copied to your clipboard.",
+        });
+      } catch (err) {
+        toast({
+          title: "Copy failed",
+          description: "Please try again.",
+          variant: "destructive",
+        });
+      }
     } else {
-      alert("Web Share API is not supported in your browser.");
+      window.open(shareUrls[platform as keyof typeof shareUrls], '_blank');
     }
   };
 
@@ -68,13 +90,61 @@ const MemberTemplate: React.FC<MemberTemplateProps> = ({ member }) => {
             </Link>
           </div>
 
+          {/* Social Sharing */}
+          <div className="mb-6 p-4 bg-white rounded-lg border">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <span className="text-sm font-medium text-gray-700">Share this member profile:</span>
+                <div className="flex space-x-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleShare('twitter')}
+                    className="h-8 w-8 p-0"
+                  >
+                    <Share2 className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleShare('linkedin')}
+                    className="h-8 w-8 p-0"
+                  >
+                    <Share2 className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleShare('facebook')}
+                    className="h-8 w-8 p-0"
+                  >
+                    <Share2 className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleShare('email')}
+                    className="h-8 w-8 p-0"
+                  >
+                    <Mail className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleShare('copy')}
+                    className="h-8 w-8 p-0"
+                  >
+                    <Copy className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <Card className="mb-8">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle className="text-2xl font-bold">{member.name}</CardTitle>
-                <Button variant="outline" size="icon" onClick={handleShare} aria-label="Share">
-                  <Share2 className="h-4 w-4" />
-                </Button>
               </div>
             </CardHeader>
             <CardContent>

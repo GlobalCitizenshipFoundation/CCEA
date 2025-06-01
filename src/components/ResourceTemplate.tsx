@@ -1,10 +1,12 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Download, Eye, Calendar, User, Users, Tag, Share2, FileText, ExternalLink } from 'lucide-react';
+import { Download, Eye, Calendar, User, Users, Tag, Share2, FileText, ExternalLink, Copy, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useToast } from '@/hooks/use-toast';
 import Navigation from './Navigation';
 import Footer from './Footer';
 
@@ -63,6 +65,8 @@ interface ResourceTemplateProps {
 }
 
 const ResourceTemplate: React.FC<ResourceTemplateProps> = ({ resource }) => {
+  const { toast } = useToast();
+
   const handleDownload = () => {
     console.log(`Downloading ${resource.title} from ${resource.fileInfo.downloadUrl}`);
     // Implement download logic here, e.g., using window.location.href or a download library
@@ -76,11 +80,36 @@ const ResourceTemplate: React.FC<ResourceTemplateProps> = ({ resource }) => {
     }
   };
 
-  const handleShare = () => {
+  const handleShare = async (platform: string) => {
     const shareUrl = window.location.href;
-    navigator.clipboard.writeText(shareUrl)
-      .then(() => alert('Link copied to clipboard!'))
-      .catch(err => console.error('Could not copy text: ', err));
+    const title = encodeURIComponent(resource.title);
+    const text = encodeURIComponent(resource.description);
+    
+    const shareUrls = {
+      twitter: `https://twitter.com/intent/tweet?text=${title}&url=${encodeURIComponent(shareUrl)}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}&title=${title}&summary=${text}`,
+      email: `mailto:?subject=${title}&body=${text}%0A%0A${shareUrl}`,
+      copy: shareUrl
+    };
+    
+    if (platform === 'copy') {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        toast({
+          title: "Link copied!",
+          description: "Resource link has been copied to your clipboard.",
+        });
+      } catch (err) {
+        toast({
+          title: "Copy failed",
+          description: "Please try again.",
+          variant: "destructive",
+        });
+      }
+    } else {
+      window.open(shareUrls[platform as keyof typeof shareUrls], '_blank');
+    }
   };
 
   return (
@@ -97,6 +126,57 @@ const ResourceTemplate: React.FC<ResourceTemplateProps> = ({ resource }) => {
               <Badge variant="secondary">{resource.resourceType}</Badge>
               {resource.category && <Badge>{resource.category}</Badge>}
               {resource.subcategory && <Badge>{resource.subcategory}</Badge>}
+            </div>
+          </div>
+
+          {/* Social Sharing */}
+          <div className="mb-8 p-4 bg-white rounded-lg border">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <span className="text-sm font-medium text-gray-700">Share this resource:</span>
+                <div className="flex space-x-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleShare('twitter')}
+                    className="h-8 w-8 p-0"
+                  >
+                    <Share2 className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleShare('linkedin')}
+                    className="h-8 w-8 p-0"
+                  >
+                    <Share2 className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleShare('facebook')}
+                    className="h-8 w-8 p-0"
+                  >
+                    <Share2 className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleShare('email')}
+                    className="h-8 w-8 p-0"
+                  >
+                    <Mail className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleShare('copy')}
+                    className="h-8 w-8 p-0"
+                  >
+                    <Copy className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -158,7 +238,7 @@ const ResourceTemplate: React.FC<ResourceTemplateProps> = ({ resource }) => {
                       Preview
                     </Button>
                   )}
-                  <Button onClick={handleShare} className="w-full" variant="ghost">
+                  <Button onClick={() => handleShare('copy')} className="w-full" variant="ghost">
                     <Share2 className="h-4 w-4 mr-2" />
                     Share
                   </Button>
