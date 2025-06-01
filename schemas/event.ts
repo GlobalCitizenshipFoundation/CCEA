@@ -81,7 +81,16 @@ export default defineType({
         { name: 'venue', title: 'Venue', type: 'string' },
         { name: 'address', title: 'Address', type: 'string' },
         { name: 'city', title: 'City', type: 'string' },
-        { name: 'country', title: 'Country', type: 'string' }
+        { name: 'country', title: 'Country', type: 'string' },
+        {
+          name: 'coordinates',
+          title: 'Coordinates',
+          type: 'object',
+          fields: [
+            { name: 'lat', title: 'Latitude', type: 'number' },
+            { name: 'lng', title: 'Longitude', type: 'number' }
+          ]
+        }
       ]
     }),
     defineField({
@@ -192,6 +201,53 @@ export default defineType({
         {
           type: 'block'
         }
+      ]
+    }),
+    defineField({
+      name: 'requirements',
+      title: 'Requirements',
+      type: 'array',
+      of: [
+        {
+          type: 'block'
+        }
+      ]
+    }),
+    defineField({
+      name: 'materials',
+      title: 'Event Materials',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'title', title: 'Title', type: 'string' },
+            { name: 'type', title: 'Type', type: 'string' },
+            { name: 'url', title: 'URL', type: 'url' },
+            { name: 'description', title: 'Description', type: 'text' }
+          ]
+        }
+      ]
+    }),
+    defineField({
+      name: 'gallery',
+      title: 'Photo Gallery',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: { hotspot: true }
+        }
+      ]
+    }),
+    defineField({
+      name: 'seo',
+      title: 'SEO Settings',
+      type: 'object',
+      fields: [
+        { name: 'metaTitle', title: 'Meta Title', type: 'string' },
+        { name: 'metaDescription', title: 'Meta Description', type: 'text' },
+        { name: 'keywords', title: 'Keywords', type: 'array', of: [{ type: 'string' }] }
       ]
     })
   ],
