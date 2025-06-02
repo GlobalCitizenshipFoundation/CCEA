@@ -71,7 +71,7 @@ const Footer = () => {
             © 2024 Civic and Citizenship Education Alliance. All rights reserved.
           </p>
           <p className="text-gray-400 text-sm mt-4 md:mt-0">
-            Built on a Foundation of Global Expertise
+            An initiative of the <b>Global Citizenship Foundation</b>.
           </p>
         </div>
       </div>
