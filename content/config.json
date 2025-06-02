@@ -1,0 +1,91 @@
+
+{
+  "site": {
+    "title": "Civic and Citizenship Education Alliance",
+    "description": "Join a global network of K-12 schools, universities, and organizations committed to transforming civic and citizenship education across diverse local and national contexts.",
+    "baseUrl": "https://ccea.org",
+    "logo": "/lovable-uploads/9fe4bf5c-153e-4db8-a758-19dbd5b2bf54.png"
+  },
+  "navigation": {
+    "main": [
+      {
+        "label": "About",
+        "url": "/about"
+      },
+      {
+        "label": "Membership",
+        "url": "/membership",
+        "children": [
+          {
+            "label": "Join CCEA",
+            "url": "/membership"
+          },
+          {
+            "label": "Our Members",
+            "url": "/members"
+          },
+          {
+            "label": "Brand Guidelines",
+            "url": "/brand-guidelines"
+          }
+        ]
+      },
+      {
+        "label": "Content",
+        "children": [
+          {
+            "label": "Articles",
+            "url": "/articles"
+          },
+          {
+            "label": "Resources",
+            "url": "/resources"
+          },
+          {
+            "label": "Events",
+            "url": "/events"
+          }
+        ]
+      },
+      {
+        "label": "CCEA Governance",
+        "children": [
+          {
+            "label": "About CCEA",
+            "children": [
+              {
+                "label": "About Us",
+                "url": "/about"
+              },
+              {
+                "label": "Our Team",
+                "url": "/team"
+              },
+              {
+                "label": "Governance",
+                "url": "/governance"
+              }
+            ]
+          },
+          {
+            "label": "About Governance",
+            "children": [
+              {
+                "label": "Governance Charter",
+                "url": "/governance-charter"
+              },
+              {
+                "label": "Brand Guidelines",
+                "url": "/brand-guidelines"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "Contact",
+        "url": "/contact"
+      }
+    ]
+  }
+}

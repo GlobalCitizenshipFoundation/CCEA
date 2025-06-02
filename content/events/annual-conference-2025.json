@@ -1,0 +1,38 @@
+
+{
+  "title": "Annual CCEA Conference 2025: Innovating Civic Education for the Digital Age",
+  "slug": "annual-conference-2025",
+  "description": "Join educators, policymakers, and researchers from around the world for our flagship annual conference exploring innovations in civic education and democratic learning.",
+  "eventType": "conference",
+  "startDate": "2025-03-15T09:00:00Z",
+  "endDate": "2025-03-17T17:00:00Z",
+  "timezone": "Europe/Brussels",
+  "location": {
+    "venue": "Brussels Convention Centre",
+    "address": "Place Eugène Flagey 18",
+    "city": "Brussels",
+    "country": "Belgium"
+  },
+  "registrationInfo": {
+    "registrationUrl": "https://conference.ccea.org/register",
+    "registrationDeadline": "2025-03-01",
+    "fees": {
+      "member": 350,
+      "regular": 450,
+      "student": 150
+    }
+  },
+  "capacity": 500,
+  "registered": 342,
+  "speakers": [
+    {
+      "name": "Dr. Maria Rodriguez",
+      "title": "Executive Director, CCEA",
+      "organization": "Civic and Citizenship Education Alliance",
+      "profileImage": "/placeholder.svg"
+    }
+  ],
+  "featuredImage": "/placeholder.svg",
+  "status": "upcoming",
+  "published": true
+}

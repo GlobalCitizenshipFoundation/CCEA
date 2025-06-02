@@ -1,0 +1,21 @@
+
+{
+  "title": "Transforming Civic Education in the Digital Age",
+  "slug": "transforming-civic-education-digital-age",
+  "excerpt": "Exploring innovative approaches to civic education through digital platforms and virtual engagement, including case studies from leading institutions.",
+  "author": {
+    "name": "Dr. Sarah Johnson",
+    "title": "Director of Civic Education Research",
+    "profileImage": "/placeholder.svg",
+    "bio": "Dr. Johnson is a leading expert in civic education with over 15 years of experience in educational policy and democratic learning frameworks."
+  },
+  "publishDate": "2024-12-15",
+  "lastModified": "2024-12-20",
+  "categories": ["Digital Learning", "Research"],
+  "tags": ["civic education", "digital tools", "innovation"],
+  "readTime": 8,
+  "featuredImage": "/placeholder.svg",
+  "content": "<p>This is sample article content about transforming civic education in the digital age.</p><h2>Key Findings</h2><p>Our research demonstrates significant improvements in student engagement when digital tools are properly integrated into civic education curricula.</p>",
+  "featured": true,
+  "published": true
+}

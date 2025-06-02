@@ -1,150 +1,275 @@
+
 import React from 'react';
-import { format } from 'date-fns';
-import { Card, CardContent } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
+import { Download, Eye, Calendar, User, Users, Tag, Share2, FileText, ExternalLink, Copy, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Download, FileText, Calendar, User, ExternalLink } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useToast } from '@/hooks/use-toast';
+import Navigation from './Navigation';
+import Footer from './Footer';
+
+interface Author {
+  name: string;
+  title?: string;
+  profileImage?: string;
+}
+
+interface Contributor {
+  name: string;
+  title?: string;
+}
+
+interface License {
+  type: string;
+  url: string;
+  attribution: string;
+}
+
+interface RelatedResource {
+  title: string;
+  resourceType: string;
+  slug: string;
+  thumbnail?: string;
+}
+
+interface FileInfo {
+  fileType: string;
+  fileSize: string;
+  downloadUrl: string;
+  previewUrl?: string;
+}
+
+interface Resource {
+  title: string;
+  description: string;
+  resourceType: string;
+  category: string;
+  subcategory?: string;
+  accessType: string;
+  fileInfo: FileInfo;
+  downloadCount?: number;
+  content: string;
+  lastUpdated: string;
+  thumbnail?: string;
+  author: Author;
+  contributors?: Contributor[];
+  license?: License;
+  relatedResources?: RelatedResource[];
+  featured?: boolean;
+}
 
 interface ResourceTemplateProps {
-  resource: {
-    title: string;
-    description?: string;
-    resourceType: string;
-    category: string;
-    fileType?: string;
-    fileSize?: string;
-    downloadUrl?: string;
-    downloadCount: number;
-    content: string;
-    lastUpdated?: string;
-    thumbnail?: string;
-    author?: {
-      name: string;
-      title: string;
-      profileImage?: string;
-    };
-  };
+  resource: Resource;
 }
 
 const ResourceTemplate: React.FC<ResourceTemplateProps> = ({ resource }) => {
+  const { toast } = useToast();
+
   const handleDownload = () => {
-    if (resource.downloadUrl) {
-      window.open(resource.downloadUrl, '_blank');
+    console.log(`Downloading ${resource.title} from ${resource.fileInfo.downloadUrl}`);
+    // Implement download logic here, e.g., using window.location.href or a download library
+  };
+
+  const handlePreview = () => {
+    if (resource.fileInfo.previewUrl) {
+      window.open(resource.fileInfo.previewUrl, '_blank');
+    } else {
+      console.log('No preview available for this resource.');
+    }
+  };
+
+  const handleShare = async (platform: string) => {
+    const shareUrl = window.location.href;
+    const title = encodeURIComponent(resource.title);
+    const text = encodeURIComponent(resource.description);
+    
+    const shareUrls = {
+      twitter: `https://twitter.com/intent/tweet?text=${title}&url=${encodeURIComponent(shareUrl)}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}&title=${title}&summary=${text}`,
+      email: `mailto:?subject=${title}&body=${text}%0A%0A${shareUrl}`,
+      copy: shareUrl
+    };
+    
+    if (platform === 'copy') {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        toast({
+          title: "Link copied!",
+          description: "Resource link has been copied to your clipboard.",
+        });
+      } catch (err) {
+        toast({
+          title: "Copy failed",
+          description: "Please try again.",
+          variant: "destructive",
+        });
+      }
+    } else {
+      window.open(shareUrls[platform as keyof typeof shareUrls], '_blank');
     }
   };
 
   return (
-    <article className="max-w-4xl mx-auto px-4 py-12">
-      {/* Resource Header */}
-      <header className="mb-12">
-        <div className="flex flex-wrap gap-2 mb-4">
-          <Badge variant="secondary">{resource.resourceType}</Badge>
-          <Badge variant="outline">{resource.category}</Badge>
-        </div>
-
-        <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-          {resource.title}
-        </h1>
-
-        {resource.description && (
-          <p className="text-xl text-gray-600 mb-8">{resource.description}</p>
-        )}
-
-        <div className="flex flex-wrap items-center justify-between border-y border-gray-200 py-4 gap-4">
-          <div className="flex items-center space-x-4">
-            {resource.author && (
-              <div className="flex items-center">
-                <User className="h-4 w-4 mr-2 text-gray-500" />
-                <span className="text-sm text-gray-600">{resource.author.name}</span>
-              </div>
-            )}
-            {resource.lastUpdated && (
-              <div className="flex items-center">
-                <Calendar className="h-4 w-4 mr-2 text-gray-500" />
-                <span className="text-sm text-gray-600">
-                  Updated {format(new Date(resource.lastUpdated), 'MMM d, yyyy')}
-                </span>
-              </div>
-            )}
+    <div className="min-h-screen bg-gray-50">
+      <Navigation />
+      
+      <main className="pt-6">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Resource Header */}
+          <div className="mb-8">
+            <h1 className="text-3xl font-semibold text-gray-900">{resource.title}</h1>
+            <p className="text-gray-500 mt-2">{resource.description}</p>
+            <div className="flex items-center space-x-2 mt-4">
+              <Badge variant="secondary">{resource.resourceType}</Badge>
+              {resource.category && <Badge>{resource.category}</Badge>}
+              {resource.subcategory && <Badge>{resource.subcategory}</Badge>}
+            </div>
           </div>
 
-          <div className="flex items-center space-x-2">
-            {resource.fileType && resource.fileSize && (
-              <Badge variant="outline\" className="text-xs">
-                <FileText className="h-3 w-3 mr-1" />
-                {resource.fileType.toUpperCase()} • {resource.fileSize}
-              </Badge>
-            )}
-            <Badge variant="secondary" className="text-xs">
-              {resource.downloadCount} downloads
-            </Badge>
-          </div>
-        </div>
-      </header>
-
-      {/* Resource Preview */}
-      {resource.thumbnail && (
-        <div className="mb-12">
-          <Card className="overflow-hidden">
-            <img
-              src={resource.thumbnail}
-              alt={resource.title}
-              className="w-full h-auto"
-            />
-          </Card>
-        </div>
-      )}
-
-      {/* Download Section */}
-      {resource.downloadUrl && (
-        <div className="mb-12">
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div>
-                  <h3 className="text-lg font-semibold mb-2">Download Resource</h3>
-                  {resource.fileType && resource.fileSize && (
-                    <p className="text-sm text-gray-600">
-                      Available as {resource.fileType.toUpperCase()} ({resource.fileSize})
-                    </p>
-                  )}
+          {/* Social Sharing */}
+          <div className="mb-8 p-4 bg-white rounded-lg border">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <span className="text-sm font-medium text-gray-700">Share this resource:</span>
+                <div className="flex space-x-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleShare('twitter')}
+                    className="h-8 w-8 p-0"
+                  >
+                    <Share2 className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleShare('linkedin')}
+                    className="h-8 w-8 p-0"
+                  >
+                    <Share2 className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleShare('facebook')}
+                    className="h-8 w-8 p-0"
+                  >
+                    <Share2 className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleShare('email')}
+                    className="h-8 w-8 p-0"
+                  >
+                    <Mail className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleShare('copy')}
+                    className="h-8 w-8 p-0"
+                  >
+                    <Copy className="h-4 w-4" />
+                  </Button>
                 </div>
-                <div className="flex gap-2">
-                  <Button onClick={handleDownload} className="bg-blue-600 hover:bg-blue-700">
+              </div>
+            </div>
+          </div>
+
+          {/* Resource Content */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle>Resource Details</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-2">
+                      <FileText className="h-4 w-4 text-gray-500" />
+                      <span>Type: {resource.fileInfo.fileType}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Download className="h-4 w-4 text-gray-500" />
+                      <span>Size: {resource.fileInfo.fileSize}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Calendar className="h-4 w-4 text-gray-500" />
+                      <span>Last Updated: {resource.lastUpdated}</span>
+                    </div>
+                    {resource.author && (
+                      <div className="flex items-center space-x-2">
+                        <User className="h-4 w-4 text-gray-500" />
+                        <span>Author: {resource.author.name}</span>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle>Content</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div dangerouslySetInnerHTML={{ __html: resource.content }} />
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Sidebar */}
+            <div>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Actions</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <Button onClick={handleDownload} className="w-full" variant="secondary">
                     <Download className="h-4 w-4 mr-2" />
                     Download
                   </Button>
-                  <Button variant="outline">
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    Preview
+                  {resource.fileInfo.previewUrl && (
+                    <Button onClick={handlePreview} className="w-full" variant="outline">
+                      <Eye className="h-4 w-4 mr-2" />
+                      Preview
+                    </Button>
+                  )}
+                  <Button onClick={() => handleShare('copy')} className="w-full" variant="ghost">
+                    <Share2 className="h-4 w-4 mr-2" />
+                    Share
                   </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+                </CardContent>
+              </Card>
+
+              {resource.relatedResources && resource.relatedResources.length > 0 && (
+                <Card className="mt-8">
+                  <CardHeader>
+                    <CardTitle>Related Resources</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="list-none space-y-2">
+                      {resource.relatedResources.map(related => (
+                        <li key={related.slug}>
+                          <Link to={`/resources/${related.slug}`} className="text-blue-500 hover:underline">
+                            {related.title} ({related.resourceType})
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          </div>
         </div>
-      )}
+      </main>
 
-      {/* Resource Content */}
-      <div className="prose prose-lg max-w-none mb-12">
-        <div dangerouslySetInnerHTML={{ __html: resource.content }} />
-      </div>
-
-      {/* Usage Guidelines */}
-      <div className="border-t border-gray-200 pt-8">
-        <h3 className="text-lg font-semibold mb-4">Usage Guidelines</h3>
-        <Card>
-          <CardContent className="p-6">
-            <ul className="space-y-2 text-sm text-gray-600">
-              <li>• This resource is provided for educational and non-commercial use</li>
-              <li>• Please cite the source when using this material</li>
-              <li>• Do not modify or redistribute without permission</li>
-              <li>• Contact us for commercial use inquiries</li>
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
-    </article>
+      <Footer />
+    </div>
   );
 };
 

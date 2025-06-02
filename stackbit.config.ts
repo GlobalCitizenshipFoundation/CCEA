@@ -1,7 +1,9 @@
-import { defineStackbitConfig } from "@stackbit/types";
+
+import { defineStackbitConfig, SiteMapEntry } from "@stackbit/types";
 import { GitContentSource } from "@stackbit/cms-git";
 
 export default defineStackbitConfig({
+  stackbitVersion: "~0.6.0",
   contentSources: [
     new GitContentSource({
       rootPath: __dirname,
@@ -14,10 +16,11 @@ export default defineStackbitConfig({
           filePath: "content/pages/{slug}.json",
           fields: [
             { name: "title", type: "string", required: true },
-            { name: "description", type: "string" },
-            { name: "featuredImage", type: "image" },
-            { name: "content", type: "markdown", required: true },
-            { name: "lastUpdated", type: "date" }
+            { name: "slug", type: "slug", required: true },
+            { name: "description", type: "text" },
+            { name: "content", type: "markdown" },
+            { name: "publishDate", type: "datetime" },
+            { name: "featured", type: "boolean" }
           ]
         },
         {
@@ -27,38 +30,15 @@ export default defineStackbitConfig({
           filePath: "content/articles/{slug}.json",
           fields: [
             { name: "title", type: "string", required: true },
-            { name: "excerpt", type: "string" },
-            { name: "author", type: "reference", models: ["TeamMember"], required: true },
-            { name: "date", type: "date", required: true },
+            { name: "slug", type: "slug", required: true },
+            { name: "excerpt", type: "text" },
+            { name: "content", type: "markdown" },
+            { name: "author", type: "reference", models: ["TeamMember"] },
+            { name: "publishDate", type: "datetime" },
             { name: "categories", type: "list", items: { type: "string" } },
             { name: "tags", type: "list", items: { type: "string" } },
-            { name: "readTime", type: "string" },
-            { name: "featured", type: "boolean", default: false },
             { name: "featuredImage", type: "image" },
-            { name: "content", type: "markdown", required: true },
-            { name: "relatedArticles", type: "list", items: { type: "reference", models: ["Article"] } },
-            { name: "socialSharing", type: "boolean", default: true }
-          ]
-        },
-        {
-          name: "Resource",
-          type: "page",
-          urlPath: "/resources/{slug}",
-          filePath: "content/resources/{slug}.json",
-          fields: [
-            { name: "title", type: "string", required: true },
-            { name: "description", type: "string" },
-            { name: "resourceType", type: "string", required: true },
-            { name: "category", type: "string", required: true },
-            { name: "fileType", type: "string" },
-            { name: "fileSize", type: "string" },
-            { name: "downloadUrl", type: "string" },
-            { name: "downloadCount", type: "number", default: 0 },
-            { name: "featured", type: "boolean", default: false },
-            { name: "content", type: "markdown", required: true },
-            { name: "lastUpdated", type: "date" },
-            { name: "thumbnail", type: "image" },
-            { name: "author", type: "reference", models: ["TeamMember"] }
+            { name: "featured", type: "boolean" }
           ]
         },
         {
@@ -68,29 +48,19 @@ export default defineStackbitConfig({
           filePath: "content/events/{slug}.json",
           fields: [
             { name: "title", type: "string", required: true },
-            { name: "description", type: "string" },
-            { name: "startDate", type: "date", required: true },
-            { name: "endDate", type: "date", required: true },
+            { name: "slug", type: "slug", required: true },
+            { name: "description", type: "text" },
+            { name: "eventType", type: "string" },
+            { name: "startDate", type: "datetime" },
+            { name: "endDate", type: "datetime" },
             { name: "location", type: "object", fields: [
               { name: "venue", type: "string" },
-              { name: "address", type: "string" },
               { name: "city", type: "string" },
-              { name: "country", type: "string" },
-              { name: "coordinates", type: "object", fields: [
-                { name: "lat", type: "number" },
-                { name: "lng", type: "number" }
-              ]}
+              { name: "country", type: "string" }
             ]},
-            { name: "isVirtual", type: "boolean", default: false },
-            { name: "registrationUrl", type: "string" },
-            { name: "capacity", type: "number" },
-            { name: "registered", type: "number", default: 0 },
-            { name: "speakers", type: "list", items: { type: "reference", models: ["TeamMember"] } },
-            { name: "agenda", type: "markdown" },
+            { name: "isVirtual", type: "boolean" },
             { name: "featuredImage", type: "image" },
-            { name: "content", type: "markdown", required: true },
-            { name: "calendarLink", type: "string" },
-            { name: "status", type: "enum", options: ["upcoming", "ongoing", "past", "cancelled"] }
+            { name: "status", type: "string" }
           ]
         },
         {
@@ -100,30 +70,51 @@ export default defineStackbitConfig({
           filePath: "content/members/{slug}.json",
           fields: [
             { name: "name", type: "string", required: true },
-            { name: "memberType", type: "enum", options: ["organization", "individual"], required: true },
-            { name: "organization", type: "string" },
+            { name: "slug", type: "slug", required: true },
+            { name: "memberType", type: "string" },
+            { name: "membershipLevel", type: "string" },
             { name: "title", type: "string" },
-            { name: "profileImage", type: "image" },
-            { name: "logo", type: "image" },
-            { name: "description", type: "string" },
+            { name: "description", type: "text" },
             { name: "bio", type: "markdown" },
+            { name: "logo", type: "image" },
             { name: "location", type: "object", fields: [
               { name: "city", type: "string" },
-              { name: "country", type: "string" }
+              { name: "country", type: "string" },
+              { name: "region", type: "string" }
             ]},
             { name: "contactInfo", type: "object", fields: [
-              { name: "email", type: "string" },
-              { name: "phone", type: "string" },
-              { name: "website", type: "string" }
-            ]},
-            { name: "socialLinks", type: "object", fields: [
-              { name: "linkedin", type: "string" },
-              { name: "twitter", type: "string" },
-              { name: "facebook", type: "string" }
+              { name: "email", type: "email" },
+              { name: "website", type: "url" },
+              { name: "phone", type: "string" }
             ]},
             { name: "memberSince", type: "date" },
             { name: "expertise", type: "list", items: { type: "string" } },
-            { name: "featured", type: "boolean", default: false }
+            { name: "featured", type: "boolean" },
+            { name: "publicProfile", type: "boolean" }
+          ]
+        },
+        {
+          name: "Resource",
+          type: "page",
+          urlPath: "/resources/{slug}",
+          filePath: "content/resources/{slug}.json",
+          fields: [
+            { name: "title", type: "string", required: true },
+            { name: "slug", type: "slug", required: true },
+            { name: "description", type: "text" },
+            { name: "resourceType", type: "string" },
+            { name: "category", type: "string" },
+            { name: "accessType", type: "string" },
+            { name: "content", type: "markdown" },
+            { name: "thumbnail", type: "image" },
+            { name: "fileInfo", type: "object", fields: [
+              { name: "fileType", type: "string" },
+              { name: "fileSize", type: "string" },
+              { name: "downloadUrl", type: "url" }
+            ]},
+            { name: "author", type: "reference", models: ["TeamMember"] },
+            { name: "lastUpdated", type: "datetime" },
+            { name: "featured", type: "boolean" }
           ]
         },
         {
@@ -133,55 +124,81 @@ export default defineStackbitConfig({
           filePath: "content/team/{slug}.json",
           fields: [
             { name: "name", type: "string", required: true },
-            { name: "title", type: "string", required: true },
+            { name: "slug", type: "slug", required: true },
+            { name: "title", type: "string" },
             { name: "department", type: "string" },
-            { name: "location", type: "string" },
-            { name: "profileImage", type: "image" },
-            { name: "photoGallery", type: "list", items: { type: "image" } },
             { name: "bio", type: "markdown" },
-            { name: "shortBio", type: "string" },
+            { name: "shortBio", type: "text" },
+            { name: "profileImage", type: "image" },
             { name: "expertise", type: "list", items: { type: "string" } },
-            { name: "education", type: "list", items: { type: "string" } },
-            { name: "publications", type: "list", items: { type: "string" } },
-            { name: "socialLinks", type: "object", fields: [
-              { name: "linkedin", type: "string" },
-              { name: "twitter", type: "string" },
-              { name: "researchGate", type: "string" }
-            ]},
-            { name: "contactInfo", type: "object", fields: [
-              { name: "email", type: "string" },
-              { name: "phone", type: "string" }
-            ]},
-            { name: "featured", type: "boolean", default: false },
-            { name: "lastUpdated", type: "date" }
-          ]
-        },
-        {
-          name: "GovernanceDoc",
-          type: "page",
-          urlPath: "/governance/{slug}",
-          filePath: "content/governance/{slug}.json",
-          fields: [
-            { name: "title", type: "string", required: true },
-            { name: "description", type: "string" },
-            { name: "category", type: "string", required: true },
-            { name: "members", type: "list", items: { 
+            { name: "education", type: "list", items: { 
               type: "object", 
               fields: [
-                { name: "member", type: "reference", models: ["TeamMember"] },
-                { name: "role", type: "string" },
-                { name: "responsibilities", type: "markdown" },
-                { name: "term", type: "object", fields: [
-                  { name: "start", type: "date" },
-                  { name: "end", type: "date" }
-                ]}
+                { name: "degree", type: "string" },
+                { name: "institution", type: "string" },
+                { name: "year", type: "string" }
               ]
             }},
-            { name: "content", type: "markdown", required: true },
-            { name: "lastUpdated", type: "date", required: true }
+            { name: "socialLinks", type: "object", fields: [
+              { name: "linkedin", type: "url" },
+              { name: "twitter", type: "url" },
+              { name: "researchGate", type: "url" }
+            ]},
+            { name: "contactInfo", type: "object", fields: [
+              { name: "email", type: "email" },
+              { name: "phone", type: "string" }
+            ]},
+            { name: "featured", type: "boolean" }
           ]
         }
-      ]
+      ],
     })
-  ]
+  ],
+  siteMap: ({ documents, models }) => {
+    const pageModels = models.filter((m) => m.type === "page");
+    
+    return documents
+      .filter((d) => pageModels.some(m => m.name === d.modelName))
+      .map((document) => {
+        const urlPath = (() => {
+          switch (document.modelName) {
+            case 'Page':
+              // Handle special cases for main pages
+              if (document.id === 'home') return '/';
+              if (document.id === 'about') return '/about';
+              if (document.id === 'contact') return '/contact';
+              if (document.id === 'membership') return '/membership';
+              if (document.id === 'governance') return '/governance';
+              if (document.id === 'governance-charter') return '/governance-charter';
+              if (document.id === 'impressum') return '/impressum';
+              if (document.id === 'brand-guidelines') return '/brand-guidelines';
+              return `/${document.id}`;
+            case 'Article':
+              return `/articles/${document.id}`;
+            case 'Event':
+              return `/events/${document.id}`;
+            case 'Member':
+              return `/members/${document.id}`;
+            case 'Resource':
+              return `/resources/${document.id}`;
+            case 'TeamMember':
+              return `/team/${document.id}`;
+            default:
+              return `/${document.id}`;
+          }
+        })();
+
+        return {
+          stableId: document.id,
+          urlPath,
+          document,
+          isHomePage: document.modelName === 'Page' && document.id === 'home',
+        };
+      })
+      .filter(Boolean) as SiteMapEntry[];
+  },
+  presetSource: {
+    type: "files",
+    referenceType: "static"
+  }
 });

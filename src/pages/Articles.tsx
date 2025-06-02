@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -23,7 +24,8 @@ const Articles = () => {
       date: "December 15, 2024",
       category: "Digital Learning",
       readTime: "8 min read",
-      featured: true
+      featured: true,
+      slug: "transforming-civic-education-digital-age"
     },
     {
       id: 2,
@@ -33,7 +35,8 @@ const Articles = () => {
       date: "December 10, 2024",
       category: "International Studies",
       readTime: "12 min read",
-      featured: true
+      featured: true,
+      slug: "global-perspectives-citizenship-education"
     },
     {
       id: 3,
@@ -43,7 +46,8 @@ const Articles = () => {
       date: "December 5, 2024",
       category: "Youth Development",
       readTime: "6 min read",
-      featured: false
+      featured: false,
+      slug: "youth-engagement-democratic-processes"
     },
     {
       id: 4,
@@ -53,7 +57,8 @@ const Articles = () => {
       date: "December 1, 2024",
       category: "Policy Research",
       readTime: "10 min read",
-      featured: false
+      featured: false,
+      slug: "policy-frameworks-civic-education-reform"
     },
     {
       id: 5,
@@ -63,7 +68,8 @@ const Articles = () => {
       date: "November 28, 2024",
       category: "Best Practices",
       readTime: "7 min read",
-      featured: false
+      featured: false,
+      slug: "building-inclusive-civic-learning-communities"
     },
     {
       id: 6,
@@ -73,7 +79,8 @@ const Articles = () => {
       date: "November 25, 2024",
       category: "Digital Learning",
       readTime: "9 min read",
-      featured: false
+      featured: false,
+      slug: "technology-integration-civic-curriculum"
     }
   ];
 
@@ -115,6 +122,7 @@ const Articles = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10"
+                aria-label="Search articles"
               />
             </div>
             <div className="flex flex-wrap gap-2">
@@ -125,6 +133,7 @@ const Articles = () => {
                   size="sm"
                   onClick={() => setSelectedCategory(category)}
                   className={selectedCategory === category ? "bg-blue-600 hover:bg-blue-700" : ""}
+                  aria-label={`Filter by ${category}`}
                 >
                   {category}
                 </Button>
@@ -162,9 +171,11 @@ const Articles = () => {
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-700 mb-4">{article.excerpt}</p>
-                    <Button variant="ghost" size="sm">
-                      Read Full Article
-                      <ArrowRight className="ml-2 h-4 w-4" />
+                    <Button variant="ghost" size="sm" asChild>
+                      <Link to={`/articles/${article.slug}`}>
+                        Read Full Article
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
                     </Button>
                   </CardContent>
                 </Card>
@@ -195,9 +206,11 @@ const Articles = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-700 mb-4 line-clamp-3">{article.excerpt}</p>
-                  <Button variant="ghost" size="sm" className="p-0">
-                    Read More
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                  <Button variant="ghost" size="sm" className="p-0" asChild>
+                    <Link to={`/articles/${article.slug}`}>
+                      Read More
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
                   </Button>
                 </CardContent>
               </Card>

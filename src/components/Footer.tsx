@@ -11,8 +11,12 @@ const Footer = () => {
           {/* Organization Info */}
           <div className="col-span-1 lg:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">C</span>
+              <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+                <img 
+                  src="/lovable-uploads/9fe4bf5c-153e-4db8-a758-19dbd5b2bf54.png" 
+                  alt="CCEA Logo" 
+                  className="w-8 h-8"
+                />
               </div>
               <div>
                 <span className="text-xl font-semibold">CCEA</span>
@@ -54,6 +58,8 @@ const Footer = () => {
             <ul className="space-y-2">
               <li><Link to="/team" className="text-gray-300 hover:text-white transition-colors">Our Team</Link></li>
               <li><Link to="/governance" className="text-gray-300 hover:text-white transition-colors">Governance</Link></li>
+              <li><Link to="/governance-charter" className="text-gray-300 hover:text-white transition-colors">Governance Charter</Link></li>
+              <li><Link to="/brand-guidelines" className="text-gray-300 hover:text-white transition-colors">Brand Guidelines</Link></li>
               <li><Link to="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</Link></li>
               <li><Link to="/impressum" className="text-gray-300 hover:text-white transition-colors">Impressum</Link></li>
             </ul>
