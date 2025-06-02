@@ -75,9 +75,7 @@ const About = () => {
                 Built on a Foundation of Global Expertise
               </p>
               <p className="text-gray-700">
-                The Civic and Citizenship Education Alliance is a strategic initiative of the Global Citizenship Foundation (GCF), a well-established organization with a 
-                mandate to make the USA & World a Foundation for Global Citizenship and Sustainable Development. CCEA leverages GCF's extensive global 
-                network and proven expertise in educational innovation and transformation.
+                The Civic and Citizenship Education Alliance is a strategic initiative of the Global Citizenship Foundation (GCF), a specialist organization with a mandate to realize UN SDG 4.7, that is, Education for Global Citizenship and Sustainable Development). CCEA leverages GCF's extensive global network, research, and years of experience to provide unparalleled support to its members.
               </p>
             </div>
           </div>
