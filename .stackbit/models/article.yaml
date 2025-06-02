@@ -1,0 +1,53 @@
+
+type: data
+name: article
+label: Article
+folder: content/articles
+fields:
+  - type: string
+    name: title
+    label: Title
+    required: true
+  - type: slug
+    name: slug
+    label: Slug
+    required: true
+  - type: markdown
+    name: excerpt
+    label: Excerpt
+  - type: markdown
+    name: content
+    label: Content
+  - type: object
+    name: author
+    label: Author
+    fields:
+      - type: string
+        name: name
+        label: Name
+      - type: string
+        name: title
+        label: Title
+      - type: image
+        name: profileImage
+        label: Profile Image
+  - type: datetime
+    name: publishDate
+    label: Publish Date
+  - type: list
+    name: categories
+    label: Categories
+    items:
+      type: string
+  - type: list
+    name: tags
+    label: Tags
+    items:
+      type: string
+  - type: image
+    name: featuredImage
+    label: Featured Image
+  - type: boolean
+    name: featured
+    label: Featured
+    default: false

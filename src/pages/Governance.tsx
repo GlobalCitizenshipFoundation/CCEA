@@ -4,7 +4,8 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Users, FileText, Calendar, Shield, Globe, Award } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Users, FileText, Calendar, Shield, Globe, Award, Building, Download, ExternalLink } from 'lucide-react';
 
 const Governance = () => {
   const boardMembers = [
@@ -247,13 +248,15 @@ const Governance = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-700 text-sm mb-4">{policy.description}</p>
-                  <div className="flex space-x-2">
-                    <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                  <div className="flex flex-col space-y-2">
+                    <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+                      <Download className="h-4 w-4 mr-2" />
                       Download PDF
-                    </button>
-                    <button className="text-green-600 hover:text-green-800 text-sm font-medium">
+                    </Button>
+                    <Button variant="outline" size="sm">
+                      <ExternalLink className="h-4 w-4 mr-2" />
                       View Online
-                    </button>
+                    </Button>
                   </div>
                 </CardContent>
               </Card>

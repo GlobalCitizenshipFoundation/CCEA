@@ -1,0 +1,22 @@
+
+{
+  "title": "Annual CCEA Conference 2025",
+  "slug": "annual-ccea-conference-2025",
+  "description": "Join educators, policymakers, and researchers from around the world for our flagship annual conference.",
+  "eventType": "conference",
+  "startDate": "2025-03-15T09:00:00Z",
+  "endDate": "2025-03-17T17:00:00Z",
+  "timezone": "Europe/Brussels",
+  "location": {
+    "venue": "Brussels Convention Centre",
+    "address": "Place Eugène Flagey 18",
+    "city": "Brussels",
+    "country": "Belgium"
+  },
+  "isVirtual": false,
+  "featuredImage": "/placeholder.svg",
+  "content": "<p>This year's conference brings together the global civic education community to explore cutting-edge innovations.</p>",
+  "status": "upcoming",
+  "dateCreated": "2024-01-01T00:00:00Z",
+  "lastModified": "2024-01-01T00:00:00Z"
+}
