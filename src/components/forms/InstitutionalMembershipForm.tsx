@@ -31,8 +31,121 @@ interface InstitutionalFormData {
   additionalInfo: string;
 }
 
+const institutionalCountryClassifications = {
+  // High-Income Countries - €1,000
+  'United States': { fee: 1000, classification: 'High-Income' },
+  'Germany': { fee: 1000, classification: 'High-Income' },
+  'United Kingdom': { fee: 1000, classification: 'High-Income' },
+  'Canada': { fee: 1000, classification: 'High-Income' },
+  'Australia': { fee: 1000, classification: 'High-Income' },
+  'Japan': { fee: 1000, classification: 'High-Income' },
+  'France': { fee: 1000, classification: 'High-Income' },
+  'Italy': { fee: 1000, classification: 'High-Income' },
+  'Spain': { fee: 1000, classification: 'High-Income' },
+  'Netherlands': { fee: 1000, classification: 'High-Income' },
+  'Sweden': { fee: 1000, classification: 'High-Income' },
+  'Switzerland': { fee: 1000, classification: 'High-Income' },
+  'Norway': { fee: 1000, classification: 'High-Income' },
+  'Denmark': { fee: 1000, classification: 'High-Income' },
+  'South Korea': { fee: 1000, classification: 'High-Income' },
+  'Singapore': { fee: 1000, classification: 'High-Income' },
+  'New Zealand': { fee: 1000, classification: 'High-Income' },
+  'United Arab Emirates': { fee: 1000, classification: 'High-Income' },
+  'Qatar': { fee: 1000, classification: 'High-Income' },
+  'Saudi Arabia': { fee: 1000, classification: 'High-Income' },
+  'Austria': { fee: 1000, classification: 'High-Income' },
+  'Belgium': { fee: 1000, classification: 'High-Income' },
+  'Finland': { fee: 1000, classification: 'High-Income' },
+  'Luxembourg': { fee: 1000, classification: 'High-Income' },
+  'Ireland': { fee: 1000, classification: 'High-Income' },
+  
+  // Upper-Middle-Income Countries - €750
+  'China': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Brazil': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Mexico': { fee: 750, classification: 'Upper-Middle-Income' },
+  'South Africa': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Turkey': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Malaysia': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Thailand': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Russia': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Argentina': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Colombia': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Peru': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Romania': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Bulgaria': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Kazakhstan': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Iran': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Algeria': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Indonesia': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Vietnam': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Philippines': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Serbia': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Poland': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Czech Republic': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Hungary': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Croatia': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Slovakia': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Slovenia': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Estonia': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Latvia': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Lithuania': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Portugal': { fee: 750, classification: 'Upper-Middle-Income' },
+  'Greece': { fee: 750, classification: 'Upper-Middle-Income' },
+  
+  // Lower-Middle-Income Countries - €500
+  'India': { fee: 500, classification: 'Lower-Middle-Income' },
+  'Nigeria': { fee: 500, classification: 'Lower-Middle-Income' },
+  'Pakistan': { fee: 500, classification: 'Lower-Middle-Income' },
+  'Bangladesh': { fee: 500, classification: 'Lower-Middle-Income' },
+  'Kenya': { fee: 500, classification: 'Lower-Middle-Income' },
+  'Ukraine': { fee: 500, classification: 'Lower-Middle-Income' },
+  'Ghana': { fee: 500, classification: 'Lower-Middle-Income' },
+  'Zambia': { fee: 500, classification: 'Lower-Middle-Income' },
+  'Morocco': { fee: 500, classification: 'Lower-Middle-Income' },
+  'Cameroon': { fee: 500, classification: 'Lower-Middle-Income' },
+  'Nepal': { fee: 500, classification: 'Lower-Middle-Income' },
+  'Myanmar': { fee: 500, classification: 'Lower-Middle-Income' },
+  'Sudan': { fee: 500, classification: 'Lower-Middle-Income' },
+  'Tanzania': { fee: 500, classification: 'Lower-Middle-Income' },
+  'Uzbekistan': { fee: 500, classification: 'Lower-Middle-Income' },
+  'Angola': { fee: 500, classification: 'Lower-Middle-Income' },
+  'Ivory Coast': { fee: 500, classification: 'Lower-Middle-Income' },
+  'Senegal': { fee: 500, classification: 'Lower-Middle-Income' },
+  'Honduras': { fee: 500, classification: 'Lower-Middle-Income' },
+  'Cambodia': { fee: 500, classification: 'Lower-Middle-Income' },
+  
+  // Low-Income Countries - €250
+  'Afghanistan': { fee: 250, classification: 'Low-Income' },
+  'Haiti': { fee: 250, classification: 'Low-Income' },
+  'Ethiopia': { fee: 250, classification: 'Low-Income' },
+  'Democratic Republic of the Congo': { fee: 250, classification: 'Low-Income' },
+  'Mozambique': { fee: 250, classification: 'Low-Income' },
+  'Somalia': { fee: 250, classification: 'Low-Income' },
+  'Yemen': { fee: 250, classification: 'Low-Income' },
+  'Chad': { fee: 250, classification: 'Low-Income' },
+  'Malawi': { fee: 250, classification: 'Low-Income' },
+  'Burundi': { fee: 250, classification: 'Low-Income' },
+  'Central African Republic': { fee: 250, classification: 'Low-Income' },
+  'Liberia': { fee: 250, classification: 'Low-Income' },
+  'Sierra Leone': { fee: 250, classification: 'Low-Income' },
+  'Niger': { fee: 250, classification: 'Low-Income' },
+  'South Sudan': { fee: 250, classification: 'Low-Income' },
+  'Togo': { fee: 250, classification: 'Low-Income' },
+  'Gambia': { fee: 250, classification: 'Low-Income' },
+  'Guinea': { fee: 250, classification: 'Low-Income' },
+  'Rwanda': { fee: 250, classification: 'Low-Income' },
+  'Madagascar': { fee: 250, classification: 'Low-Income' }
+};
+
+const countries = Object.keys(institutionalCountryClassifications).concat(['Other']).sort();
+
 const InstitutionalMembershipForm = () => {
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<InstitutionalFormData>();
+
+  const watchCountry = watch('country');
+  const countryInfo = institutionalCountryClassifications[watchCountry as keyof typeof institutionalCountryClassifications];
+  const membershipFee = countryInfo?.fee || 500;
+  const classification = countryInfo?.classification || 'Other';
 
   const onSubmit = (data: InstitutionalFormData) => {
     console.log('Institutional membership application:', data);
@@ -216,11 +329,19 @@ const InstitutionalMembershipForm = () => {
 
                 <div>
                   <Label htmlFor="country">Country *</Label>
-                  <Input
+                  <select
                     id="country"
                     {...register('country', { required: 'Country is required' })}
-                    placeholder="Belgium"
-                  />
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    onChange={(e) => {
+                      setValue('country', e.target.value);
+                    }}
+                  >
+                    <option value="">Select your country</option>
+                    {countries.map((country) => (
+                      <option key={country} value={country}>{country}</option>
+                    ))}
+                  </select>
                   {errors.country && (
                     <p className="text-sm text-red-600 mt-1">{errors.country.message}</p>
                   )}
@@ -297,13 +418,35 @@ const InstitutionalMembershipForm = () => {
             {/* Membership Fee Information */}
             <div className="bg-blue-50 p-6 rounded-lg">
               <h3 className="text-lg font-semibold text-blue-900 mb-3">Membership Investment</h3>
-              <p className="text-blue-800 mb-2">
-                <strong>Full Membership:</strong> Starting from €500 annually
-              </p>
-              <p className="text-sm text-blue-700">
-                Final membership fee will be determined based on your organization's size, capacity, and geographic location. 
-                Our team will provide a custom quote during the consultation process.
-              </p>
+              {watchCountry && countryInfo ? (
+                <>
+                  <p className="text-blue-800 mb-2">
+                    <strong>Your Annual Membership Fee:</strong> €{membershipFee}
+                  </p>
+                  <p className="text-sm text-blue-700 mb-2">
+                    <strong>Country Classification:</strong> {classification}
+                  </p>
+                  <p className="text-sm text-blue-700">
+                    Pricing is based on World Bank country income classifications to ensure global accessibility. 
+                    Institutional membership fees are structured to be sustainable within each country's economic context.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="text-blue-800 mb-2">
+                    <strong>Institutional Membership Fees:</strong>
+                  </p>
+                  <ul className="text-sm text-blue-700 space-y-1">
+                    <li>• High-Income Countries: €1,000 annually</li>
+                    <li>• Upper-Middle-Income Countries: €750 annually</li>
+                    <li>• Lower-Middle-Income Countries: €500 annually</li>
+                    <li>• Low-Income Countries: €250 annually</li>
+                  </ul>
+                  <p className="text-xs text-blue-600 mt-3">
+                    Select your country above to see your specific membership fee.
+                  </p>
+                </>
+              )}
             </div>
 
             {/* Submit Button */}
