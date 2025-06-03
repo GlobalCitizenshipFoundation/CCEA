@@ -44,10 +44,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
                   } hover:text-blue-600`}
                   onClick={() => toggleDropdown(dropdownKey)}
                 >
-                  <div className="flex items-center">
-                    <item.icon className="h-4 w-4 mr-3" />
-                    {item.name}
-                  </div>
+                  <span>{item.name}</span>
                   <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns[dropdownKey] ? 'rotate-180' : ''}`} />
                 </Button>
                 
@@ -112,8 +109,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
                 asChild
               >
                 <Link to={item.href} onClick={() => setIsOpen(false)}>
-                  <item.icon className="h-4 w-4 mr-3" />
-                  {item.name}
+                  <span>{item.name}</span>
                 </Link>
               </Button>
             );

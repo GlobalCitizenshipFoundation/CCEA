@@ -45,7 +45,6 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ dropdowns, toggle
                 aria-haspopup="true"
                 aria-expanded={dropdowns[dropdownKey]}
               >
-                <item.icon className="h-4 w-4" />
                 <span>{item.name}</span>
                 <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns[dropdownKey] ? 'rotate-180' : ''}`} />
               </Button>
@@ -113,7 +112,6 @@ const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ dropdowns, toggle
               asChild
             >
               <Link to={item.href}>
-                <item.icon className="h-4 w-4" />
                 <span>{item.name}</span>
               </Link>
             </Button>
