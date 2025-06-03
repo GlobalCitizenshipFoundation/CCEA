@@ -197,11 +197,18 @@ const Events = () => {
                         ></div>
                       </div>
                     </div>
-                    <Button size="sm" className="bg-blue-600 hover:bg-blue-700" asChild>
-                      <Link to={`/events/${event.id}`}>
-                        View Event Details
-                      </Link>
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button size="sm" className="bg-blue-600 hover:bg-blue-700" asChild>
+                        <Link to={`/events/${event.id}`}>
+                          View Details
+                        </Link>
+                      </Button>
+                      <Button size="sm" variant="outline" asChild>
+                        <Link to={`/events/${event.id}/register`}>
+                          Register Now
+                        </Link>
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
@@ -249,11 +256,18 @@ const Events = () => {
                       ></div>
                     </div>
                   </div>
-                  <Button variant="outline" size="sm" className="w-full" asChild>
-                    <Link to={`/events/${event.id}`}>
-                      View Event Details
-                    </Link>
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" className="flex-1" asChild>
+                      <Link to={`/events/${event.id}`}>
+                        View Details
+                      </Link>
+                    </Button>
+                    <Button size="sm" className="flex-1 bg-blue-600 hover:bg-blue-700" asChild>
+                      <Link to={`/events/${event.id}/register`}>
+                        Register
+                      </Link>
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             ))}

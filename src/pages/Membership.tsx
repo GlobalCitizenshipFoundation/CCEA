@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -7,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Check, Building, User, Globe, Users, BookOpen, Award, Star, Shield, Heart, Target, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Membership = () => {
   const institutionalBenefits = [
@@ -90,6 +90,13 @@ const Membership = () => {
     }
   ];
 
+  const handleExploreOptions = () => {
+    const element = document.getElementById('membership-levels');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
@@ -111,7 +118,7 @@ const Membership = () => {
               for tomorrow's world.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 px-8 py-4 text-lg">
+              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 px-8 py-4 text-lg" onClick={handleExploreOptions}>
                 Explore Membership Options
               </Button>
               <Button size="lg" variant="outline" className="px-8 py-4 text-lg">
@@ -138,7 +145,7 @@ const Membership = () => {
       </section>
 
       {/* Membership Types */}
-      <section className="py-24 bg-gray-50">
+      <section id="membership-levels" className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">Choose Your Membership Level</h2>
@@ -169,8 +176,8 @@ const Membership = () => {
                   <div className="text-4xl font-bold text-blue-600 mb-2">
                     Custom Pricing
                   </div>
-                  <p className="text-sm text-gray-600">Tailored to your organization's size and impact</p>
-                  <p className="text-xs text-gray-500 mt-2">Starting from €2,500 annually</p>
+                  <p className="text-sm text-gray-600">Tailored to your organization's size and capacity</p>
+                  <p className="text-xs text-gray-500 mt-2">Starting from €500 annually</p>
                 </div>
               </CardHeader>
               <CardContent className="px-8 pb-10">
@@ -185,8 +192,10 @@ const Membership = () => {
                   ))}
                 </div>
                 <div className="space-y-4">
-                  <Button className="w-full bg-blue-600 hover:bg-blue-700 py-4 text-lg font-semibold">
-                    Apply for Full Membership
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700 py-4 text-lg font-semibold" asChild>
+                    <Link to="/membership/apply/institutional">
+                      Apply for Full Membership
+                    </Link>
                   </Button>
                   <Button variant="outline" className="w-full py-3">
                     Schedule Consultation
@@ -207,10 +216,10 @@ const Membership = () => {
                 </CardDescription>
                 <div className="mt-8">
                   <div className="text-4xl font-bold text-green-600 mb-2">
-                    €150
+                    From €100
                   </div>
-                  <p className="text-sm text-gray-600">Per year, billed annually</p>
-                  <p className="text-xs text-gray-500 mt-2">Best value for individual professionals</p>
+                  <p className="text-sm text-gray-600">Per year, based on Purchasing Power Parity</p>
+                  <p className="text-xs text-gray-500 mt-2">Ensuring global accessibility</p>
                 </div>
               </CardHeader>
               <CardContent className="px-8 pb-10">
@@ -225,8 +234,10 @@ const Membership = () => {
                   ))}
                 </div>
                 <div className="space-y-4">
-                  <Button className="w-full bg-green-600 hover:bg-green-700 py-4 text-lg font-semibold">
-                    Join as Associate Member
+                  <Button className="w-full bg-green-600 hover:bg-green-700 py-4 text-lg font-semibold" asChild>
+                    <Link to="/membership/apply/individual">
+                      Join as Associate Member
+                    </Link>
                   </Button>
                   <Button variant="outline" className="w-full py-3">
                     Learn More
@@ -413,7 +424,7 @@ const Membership = () => {
               participation through innovative civic education. Your membership makes a global impact.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold">
+              <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold" onClick={handleExploreOptions}>
                 Start Your Application Today
               </Button>
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 text-lg">

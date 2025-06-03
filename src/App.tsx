@@ -27,16 +27,20 @@ import TeamMemberTemplate from "./components/TeamMemberTemplate";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <Router>
+import MembershipApplicationInstitutional from './pages/MembershipApplicationInstitutional';
+import MembershipApplicationIndividual from './pages/MembershipApplicationIndividual';
+import EventRegistration from './pages/EventRegistration';
+
+function App() {
+  return (
+    <Router>
+      <div className="min-h-screen bg-white">
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
           <Route path="/membership" element={<Membership />} />
+          <Route path="/membership/apply/institutional" element={<MembershipApplicationInstitutional />} />
+          <Route path="/membership/apply/individual" element={<MembershipApplicationIndividual />} />
           <Route path="/articles" element={<Articles />} />
           <Route path="/articles/:slug" element={
             <ArticleTemplate article={{
@@ -191,6 +195,7 @@ const App = () => (
               status: "upcoming"
             }} />
           } />
+          <Route path="/events/:id/register" element={<EventRegistration />} />
           <Route path="/members" element={<Members />} />
           <Route path="/members/:slug" element={
             <MemberTemplate member={{
@@ -317,9 +322,9 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </Router>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+      </div>
+    </Router>
+  );
+}
 
 export default App;
