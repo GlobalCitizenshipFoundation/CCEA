@@ -1,17 +1,8 @@
-
 import React from 'react';
 import { UseFormRegister, FieldErrors, UseFormSetValue } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-
-interface IndividualFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  country: string;
-  city: string;
-}
+import { IndividualFormData } from '@/types/membershipForms';
 
 interface PersonalInformationSectionProps {
   register: UseFormRegister<IndividualFormData>;

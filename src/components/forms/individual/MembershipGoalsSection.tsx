@@ -1,15 +1,8 @@
-
 import React from 'react';
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-
-interface IndividualFormData {
-  professionalGoals: string;
-  contributions: string;
-  references: string;
-  additionalInfo: string;
-}
+import { IndividualFormData } from '@/types/membershipForms';
 
 interface MembershipGoalsSectionProps {
   register: UseFormRegister<IndividualFormData>;

@@ -9,25 +9,7 @@ import ProfessionalInformationSection from './individual/ProfessionalInformation
 import MembershipGoalsSection from './individual/MembershipGoalsSection';
 import MembershipFeeDisplay from './shared/MembershipFeeDisplay';
 import { countryClassifications, getCountriesList } from '@/data/countryClassifications';
-
-interface IndividualFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  country: string;
-  city: string;
-  currentPosition: string;
-  organization: string;
-  educationLevel: string;
-  yearsExperience: string;
-  areasOfExpertise: string;
-  professionalGoals: string;
-  contributions: string;
-  references: string;
-  linkedinProfile: string;
-  additionalInfo: string;
-}
+import { IndividualFormData } from '@/types/membershipForms';
 
 const countries = getCountriesList('individual');
 

@@ -1,17 +1,9 @@
-
 import React from 'react';
 import { UseFormRegister, FieldErrors, UseFormSetValue } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-
-interface InstitutionalFormData {
-  organizationName: string;
-  organizationType: string;
-  foundedYear: number;
-  organizationSize: string;
-  website: string;
-}
+import { InstitutionalFormData } from '@/types/membershipForms';
 
 interface OrganizationInformationSectionProps {
   register: UseFormRegister<InstitutionalFormData>;

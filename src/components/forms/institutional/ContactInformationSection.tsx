@@ -1,18 +1,8 @@
-
 import React from 'react';
 import { UseFormRegister, FieldErrors, UseFormSetValue } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-
-interface InstitutionalFormData {
-  primaryContact: string;
-  title: string;
-  email: string;
-  phone: string;
-  address: string;
-  city: string;
-  country: string;
-}
+import { InstitutionalFormData } from '@/types/membershipForms';
 
 interface ContactInformationSectionProps {
   register: UseFormRegister<InstitutionalFormData>;

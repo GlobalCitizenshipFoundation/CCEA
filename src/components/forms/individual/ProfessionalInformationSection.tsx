@@ -1,19 +1,10 @@
-
 import React from 'react';
 import { UseFormRegister, FieldErrors, UseFormSetValue } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-
-interface IndividualFormData {
-  currentPosition: string;
-  organization: string;
-  educationLevel: string;
-  yearsExperience: string;
-  areasOfExpertise: string;
-  linkedinProfile: string;
-}
+import { IndividualFormData } from '@/types/membershipForms';
 
 interface ProfessionalInformationSectionProps {
   register: UseFormRegister<IndividualFormData>;

@@ -9,28 +9,7 @@ import ContactInformationSection from './institutional/ContactInformationSection
 import ExperienceSection from './institutional/ExperienceSection';
 import MembershipFeeDisplay from './shared/MembershipFeeDisplay';
 import { institutionalCountryClassifications, getCountriesList } from '@/data/countryClassifications';
-
-interface InstitutionalFormData {
-  organizationName: string;
-  organizationType: string;
-  primaryContact: string;
-  title: string;
-  email: string;
-  phone: string;
-  website: string;
-  address: string;
-  city: string;
-  country: string;
-  foundedYear: number;
-  organizationSize: string;
-  annualBudget: string;
-  civicEducationExperience: string;
-  currentPrograms: string;
-  membershipGoals: string;
-  commitmentLetter: File | null;
-  references: string;
-  additionalInfo: string;
-}
+import { InstitutionalFormData } from '@/types/membershipForms';
 
 const countries = getCountriesList('institutional');
 

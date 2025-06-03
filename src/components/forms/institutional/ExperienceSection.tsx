@@ -1,16 +1,8 @@
-
 import React from 'react';
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-
-interface InstitutionalFormData {
-  civicEducationExperience: string;
-  currentPrograms: string;
-  membershipGoals: string;
-  references: string;
-  additionalInfo: string;
-}
+import { InstitutionalFormData } from '@/types/membershipForms';
 
 interface ExperienceSectionProps {
   register: UseFormRegister<InstitutionalFormData>;
