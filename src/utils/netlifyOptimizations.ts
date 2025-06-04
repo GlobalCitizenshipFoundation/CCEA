@@ -1,6 +1,15 @@
 
 // Netlify-specific optimizations and utilities
 
+// Extend Window interface for Netlify Identity
+declare global {
+  interface Window {
+    netlifyIdentity?: {
+      init: () => void;
+    };
+  }
+}
+
 export const preloadCriticalResources = () => {
   // Preload critical CSS and fonts
   const criticalResources = [
