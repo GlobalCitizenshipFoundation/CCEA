@@ -1,9 +1,26 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ContentPreview from "@/components/preview/ContentPreview";
+
+// Import all page components
+import Index from "./pages/Index";
+import About from "./pages/About";
+import Membership from "./pages/Membership";
+import Articles from "./pages/Articles";
+import Resources from "./pages/Resources";
+import Events from "./pages/Events";
+import Members from "./pages/Members";
+import Team from "./pages/Team";
+import Governance from "./pages/Governance";
+import GovernanceCharter from "./pages/GovernanceCharter";
+import Impressum from "./pages/Impressum";
+import Contact from "./pages/Contact";
+import BrandGuidelines from "./pages/BrandGuidelines";
+import NotFound from "./pages/NotFound";
 
 // Template components for individual pages
 import ArticleTemplate from "./components/ArticleTemplate";

@@ -1,45 +1,60 @@
 
-import { defineStackbitConfig, SiteMapEntry } from '@stackbit/types'
-import { sanitySource } from '@stackbit/cms-sanity'
+import { defineStackbitConfig } from '@stackbit/types'
 
-const config = defineStackbitConfig({
+export default defineStackbitConfig({
   stackbitVersion: '~0.6.0',
-  ssgName: 'custom',
+  ssgName: 'vite',
   nodeVersion: '18',
-  devCommand: 'npm run dev',
-  experimental: {
-    ssg: {
-      name: 'vite',
-      logPatterns: {
-        up: ['Local:', 'ready in']
-      },
-      directoryChangeInvalidation: true
-    }
-  },
+  
   contentSources: [
-    sanitySource({
-      projectId: process.env.SANITY_STUDIO_PROJECT_ID!,
-      dataset: process.env.SANITY_STUDIO_DATASET || 'production',
-      studioUrl: '/admin',
-      previewMode: 'live'
-    })
+    {
+      name: 'sanity',
+      type: 'sanity',
+      parameters: {
+        projectId: process.env.VITE_SANITY_PROJECT_ID || 'your-project-id',
+        dataset: process.env.VITE_SANITY_DATASET || 'production',
+        apiVersion: '2024-01-01'
+      }
+    }
   ],
-  mapStyles: (styles) => styles,
+
+  modelExtensions: [
+    {
+      name: 'page',
+      type: 'page',
+      urlPath: '/{slug}'
+    },
+    {
+      name: 'article',
+      type: 'page', 
+      urlPath: '/articles/{slug}'
+    },
+    {
+      name: 'event',
+      type: 'page',
+      urlPath: '/events/{slug}' 
+    },
+    {
+      name: 'resource',
+      type: 'page',
+      urlPath: '/resources/{slug}'
+    },
+    {
+      name: 'member',
+      type: 'page',
+      urlPath: '/members/{slug}'
+    },
+    {
+      name: 'teamMember',
+      type: 'page',
+      urlPath: '/team/{slug}'
+    }
+  ],
+
   presetSource: {
-    type: 'contentful',
-    contentfulSpaceId: process.env.CONTENTFUL_SPACE_ID!,
-    contentfulAccessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
-    contentfulPreviewToken: process.env.CONTENTFUL_PREVIEW_TOKEN!
-  },
-  models: {
-    page: { type: 'page' },
-    article: { type: 'data' },
-    event: { type: 'data' },
-    resource: { type: 'data' },
-    member: { type: 'data' },
-    teamMember: { type: 'data' },
-    settings: { type: 'data' }
+    type: 'files',
+    staticDir: 'public',
+    uploadDir: 'images',
+    assetsRef: 'relative'
   }
 })
-
-export default config
