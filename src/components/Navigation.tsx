@@ -1,102 +1,77 @@
+
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
-import Logo from '@/components/Logo';
+import NavigationLogo from './navigation/NavigationLogo';
+import DesktopNavigation from './navigation/DesktopNavigation';
+import MobileNavigation from './navigation/MobileNavigation';
 
 const Navigation = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [dropdowns, setDropdowns] = useState({
+    membership: false,
+    team: false,
+    content: false,
+    governance: false
+  });
+  const location = useLocation();
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+  const toggleDropdown = (dropdown: keyof typeof dropdowns) => {
+    setDropdowns(prev => ({
+      ...prev,
+      [dropdown]: !prev[dropdown]
+    }));
+  };
+
+  const isActive = (path: string) => location.pathname === path;
+
+  const isDropdownActive = (items: any[]) => {
+    return items.some(item => {
+      if (item.items) {
+        return item.items.some((subItem: any) => isActive(subItem.href));
+      }
+      return isActive(item.href);
+    });
   };
 
   return (
-    <nav className="bg-white shadow-sm sticky top-0 z-40" role="navigation" aria-label="Main navigation">
+    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
+          <div className="flex items-center min-w-0 flex-1">
+            <NavigationLogo />
+          </div>
+
           <div className="flex items-center">
-            <Link to="/" className="flex-shrink-0">
-              <Logo className="h-8 w-auto" />
-            </Link>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                <Link to="/" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                  Home
-                </Link>
-                <Link to="/about" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                  About
-                </Link>
-                <Link to="/events" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                  Events
-                </Link>
-                <Link to="/resources" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                  Resources
-                </Link>
-                <Link to="/membership" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                  Membership
-                </Link>
-                <Link to="/contact" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                  Contact
-                </Link>
-              </div>
+            <DesktopNavigation 
+              dropdowns={dropdowns}
+              toggleDropdown={toggleDropdown}
+            />
+
+            {/* Mobile menu button */}
+            <div className="lg:hidden flex items-center ml-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsOpen(!isOpen)}
+                aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+                aria-expanded={isOpen}
+              >
+                {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </Button>
             </div>
           </div>
-          
-          <div className="hidden md:flex items-center space-x-8">
-            <Link 
-              to="/admin/content" 
-              className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            >
-              CMS
-            </Link>
-          </div>
-
-          <div className="-mr-2 flex md:hidden">
-            <button
-              onClick={toggleMobileMenu}
-              type="button"
-              className="bg-white inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              aria-controls="mobile-menu"
-              aria-expanded={isMobileMenuOpen}
-            >
-              <span className="sr-only">Open main menu</span>
-              {isMobileMenuOpen ? (
-                <X className="h-6 w-6" aria-hidden="true" />
-              ) : (
-                <Menu className="h-6 w-6" aria-hidden="true" />
-              )}
-            </button>
-          </div>
         </div>
-      </div>
 
-      <div className="md:hidden" id="mobile-menu" style={{ display: isMobileMenuOpen ? 'block' : 'none' }}>
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          <Link to="/" className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-            Home
-          </Link>
-          <Link to="/about" className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-            About
-          </Link>
-          <Link to="/events" className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-            Events
-          </Link>
-          <Link to="/resources" className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-            Resources
-          </Link>
-          <Link to="/membership" className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-            Membership
-          </Link>
-          <Link to="/contact" className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-            Contact
-          </Link>
-          <Link 
-            to="/admin/content" 
-            className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-          >
-            CMS
-          </Link>
-        </div>
+        <MobileNavigation
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          dropdowns={dropdowns}
+          toggleDropdown={toggleDropdown}
+          isActive={isActive}
+          isDropdownActive={isDropdownActive}
+        />
       </div>
     </nav>
   );
