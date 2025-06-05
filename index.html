@@ -16,12 +16,24 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@CCEAlliance" />
     <meta name="twitter:image" content="https://github.com/GlobalCitizenshipFoundation/ccea/blob/main/public/CCEA%20Cover.jpg?raw=true" />
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/src/index.css" as="style" />
+    <link rel="preload" href="/src/main.tsx" as="script" />
+    
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+    
+    <!-- Defer non-critical resources -->
+    <link rel="prefetch" href="/src/pages/About.tsx" />
+    <link rel="prefetch" href="/src/pages/Contact.tsx" />
   </head>
 
   <body>
     <div id="root"></div>
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module" defer></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
