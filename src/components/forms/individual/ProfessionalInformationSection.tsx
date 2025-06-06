@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { UseFormRegister, FieldErrors, UseFormSetValue } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
@@ -10,12 +11,14 @@ interface ProfessionalInformationSectionProps {
   register: UseFormRegister<IndividualFormData>;
   errors: FieldErrors<IndividualFormData>;
   setValue: UseFormSetValue<IndividualFormData>;
+  onInputChange: (field: string, value: string) => void;
 }
 
 const ProfessionalInformationSection: React.FC<ProfessionalInformationSectionProps> = ({
   register,
   errors,
-  setValue
+  setValue,
+  onInputChange
 }) => {
   return (
     <div className="space-y-6">
@@ -28,6 +31,7 @@ const ProfessionalInformationSection: React.FC<ProfessionalInformationSectionPro
             id="currentPosition"
             {...register('currentPosition', { required: 'Current position is required' })}
             placeholder="Teacher, Professor, Education Coordinator, etc."
+            onChange={(e) => onInputChange('currentPosition', e.target.value)}
           />
           {errors.currentPosition && (
             <p className="text-sm text-red-600 mt-1">{errors.currentPosition.message}</p>
@@ -40,6 +44,7 @@ const ProfessionalInformationSection: React.FC<ProfessionalInformationSectionPro
             id="organization"
             {...register('organization', { required: 'Organization is required' })}
             placeholder="School, University, NGO, etc."
+            onChange={(e) => onInputChange('organization', e.target.value)}
           />
           {errors.organization && (
             <p className="text-sm text-red-600 mt-1">{errors.organization.message}</p>
@@ -48,7 +53,10 @@ const ProfessionalInformationSection: React.FC<ProfessionalInformationSectionPro
 
         <div>
           <Label htmlFor="educationLevel">Highest Education Level *</Label>
-          <RadioGroup onValueChange={(value) => setValue('educationLevel', value)}>
+          <RadioGroup onValueChange={(value) => {
+            setValue('educationLevel', value);
+            onInputChange('educationLevel', value);
+          }}>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="bachelor" id="bachelor" />
               <Label htmlFor="bachelor">Bachelor's Degree</Label>
@@ -70,7 +78,10 @@ const ProfessionalInformationSection: React.FC<ProfessionalInformationSectionPro
 
         <div>
           <Label htmlFor="yearsExperience">Years of Experience in Education *</Label>
-          <RadioGroup onValueChange={(value) => setValue('yearsExperience', value)}>
+          <RadioGroup onValueChange={(value) => {
+            setValue('yearsExperience', value);
+            onInputChange('yearsExperience', value);
+          }}>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="0-2" id="0-2" />
               <Label htmlFor="0-2">0-2 years</Label>
@@ -98,6 +109,7 @@ const ProfessionalInformationSection: React.FC<ProfessionalInformationSectionPro
           {...register('areasOfExpertise', { required: 'Areas of expertise are required' })}
           placeholder="Describe your specific areas of expertise in civic education, democracy, citizenship, etc."
           rows={3}
+          onChange={(e) => onInputChange('areasOfExpertise', e.target.value)}
         />
         {errors.areasOfExpertise && (
           <p className="text-sm text-red-600 mt-1">{errors.areasOfExpertise.message}</p>
@@ -111,6 +123,7 @@ const ProfessionalInformationSection: React.FC<ProfessionalInformationSectionPro
           type="url"
           {...register('linkedinProfile')}
           placeholder="https://linkedin.com/in/yourprofile"
+          onChange={(e) => onInputChange('linkedinProfile', e.target.value)}
         />
       </div>
     </div>
