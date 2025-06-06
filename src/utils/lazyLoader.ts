@@ -1,5 +1,6 @@
 
 import { lazy } from 'react';
+import React from 'react';
 
 // Utility for lazy loading with better error handling
 export const createLazyComponent = (importFn: () => Promise<any>) => {
@@ -11,18 +12,20 @@ export const createLazyComponent = (importFn: () => Promise<any>) => {
         default: () => {
           const handleRetry = () => window.location.reload();
           
-          return (
-            <div className="min-h-screen flex items-center justify-center">
-              <div className="text-center">
-                <p className="text-gray-600">Failed to load component</p>
-                <button 
-                  onClick={handleRetry}
-                  className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                >
-                  Retry
-                </button>
-              </div>
-            </div>
+          return React.createElement('div', {
+            className: "min-h-screen flex items-center justify-center"
+          }, 
+            React.createElement('div', {
+              className: "text-center"
+            },
+              React.createElement('p', {
+                className: "text-gray-600"
+              }, "Failed to load component"),
+              React.createElement('button', {
+                onClick: handleRetry,
+                className: "mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              }, "Retry")
+            )
           );
         }
       };
