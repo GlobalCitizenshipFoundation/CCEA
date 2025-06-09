@@ -1,10 +1,9 @@
-
 import { defineStackbitConfig, SiteMapEntry } from '@stackbit/types'
 import { GitContentSource } from '@stackbit/cms-git'
 
 export default defineStackbitConfig({
   stackbitVersion: '~0.6.0',
-  ssgName: 'vite',
+  ssgName: 'custom', // changed from 'vite' to 'custom' to match allowed values
   nodeVersion: '18',
   
   contentSources: [
@@ -139,44 +138,50 @@ export default defineStackbitConfig({
 
   siteMap: ({ documents, models }) => {
     const pageModels = models.filter((m) => m.type === 'page')
-    
     return documents
       .filter((d) => pageModels.some(m => m.name === d.modelName))
       .map((document) => {
         let urlPath = '/'
         let isHomePage = false
-
+        // Try to extract slug as string from document.fields.slug
+        let slug: string | undefined = undefined;
+        if (document.fields?.slug) {
+          if (typeof document.fields.slug === 'string') {
+            slug = document.fields.slug;
+          } else if ('value' in document.fields.slug && typeof document.fields.slug.value === 'string') {
+            slug = document.fields.slug.value;
+          }
+        }
         switch (document.modelName) {
           case 'Page':
-            if (document.slug === 'home') {
+            if (slug === 'home') {
               urlPath = '/'
               isHomePage = true
             } else {
-              urlPath = `/${document.slug}`
+              urlPath = `/${slug}`
             }
             break
           case 'Article':
-            urlPath = `/articles/${document.slug}`
+            urlPath = `/articles/${slug}`
             break
           case 'Event':
-            urlPath = `/events/${document.slug}`
+            urlPath = `/events/${slug}`
             break
           case 'Resource':
-            urlPath = `/resources/${document.slug}`
+            urlPath = `/resources/${slug}`
             break
           case 'Member':
-            urlPath = `/members/${document.slug}`
+            urlPath = `/members/${slug}`
             break
           case 'TeamMember':
-            urlPath = `/team/${document.slug}`
+            urlPath = `/team/${slug}`
             break
           case 'GovernanceDoc':
-            urlPath = `/governance/${document.slug}`
+            urlPath = `/governance/${slug}`
             break
           default:
             return null
         }
-
         return {
           stableId: document.id,
           urlPath,
