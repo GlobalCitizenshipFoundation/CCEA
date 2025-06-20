@@ -1,9 +1,10 @@
 
-import React from 'react';
+import React from 'react'
 import { Link } from 'react-router-dom';
-import { ArrowRight, Calendar, Users, Globe, BookOpen } from 'lucide-react';
+import { ArrowRight, Calendar, Users, Globe, BookOpen } from 'lucide-react'
+import EditableText from '@/components/editable/EditableText'
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import HomeSchema from '@/components/HomeSchema';
@@ -42,15 +43,20 @@ const Index = () => {
           >
             <div className="max-w-7xl mx-auto">
               <div className="text-center">
-                <h1 
-                  id="hero-heading"
+                <EditableText
+                  text="Civic and Citizenship Education Alliance"
+                  as="h1"
                   className="text-4xl md:text-6xl font-bold text-gray-900 mb-6"
-                >
-                  Civic and Citizenship Education Alliance
-                </h1>
-                <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
-                  Connecting educators, researchers, and policymakers worldwide to advance civic education and democratic participation.
-                </p>
+                  fieldPath="hero.title"
+                  objectId="home"
+                />
+                <EditableText
+                  text="Connecting educators, researchers, and policymakers worldwide to advance civic education and democratic participation."
+                  as="p"
+                  className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto"
+                  fieldPath="hero.subtitle"
+                  objectId="home"
+                />
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                     <Link to="/membership" aria-describedby="join-description">
@@ -81,15 +87,21 @@ const Index = () => {
           >
             <div className="max-w-7xl mx-auto">
               <header className="text-center mb-16">
-                <h2 
+                <EditableText
+                  text="Empowering Global Civic Education"
+                  as="h2"
                   id="features-heading"
                   className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
-                >
-                  Empowering Global Civic Education
-                </h2>
-                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                  We bring together diverse perspectives and expertise to strengthen democratic institutions through education.
-                </p>
+                  fieldPath="features.title"
+                  objectId="home"
+                />
+                <EditableText
+                  text="We bring together diverse perspectives and expertise to strengthen democratic institutions through education."
+                  as="p"
+                  className="text-xl text-gray-600 max-w-2xl mx-auto"
+                  fieldPath="features.description"
+                  objectId="home"
+                />
               </header>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" role="list">
@@ -98,12 +110,22 @@ const Index = () => {
                     <div className="mx-auto w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4" aria-hidden="true">
                       <Calendar className="h-6 w-6 text-blue-600" />
                     </div>
-                    <CardTitle className="text-lg">Events & Conferences</CardTitle>
+                    <EditableText
+                      text="Events & Conferences"
+                      as="h3"
+                      className="text-lg"
+                      fieldPath="features.cards[0].title"
+                      objectId="home"
+                    />
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600">
-                      Join our global community at conferences, workshops, and networking events.
-                    </p>
+                    <EditableText
+                      text="Join our global community at conferences, workshops, and networking events."
+                      as="p"
+                      className="text-gray-600"
+                      fieldPath="features.cards[0].text"
+                      objectId="home"
+                    />
                   </CardContent>
                 </Card>
 
@@ -112,12 +134,22 @@ const Index = () => {
                     <div className="mx-auto w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4" aria-hidden="true">
                       <BookOpen className="h-6 w-6 text-green-600" />
                     </div>
-                    <CardTitle className="text-lg">Research & Resources</CardTitle>
+                    <EditableText
+                      text="Research & Resources"
+                      as="h3"
+                      className="text-lg"
+                      fieldPath="features.cards[1].title"
+                      objectId="home"
+                    />
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600">
-                      Access cutting-edge research, publications, and educational materials.
-                    </p>
+                    <EditableText
+                      text="Access cutting-edge research, publications, and educational materials."
+                      as="p"
+                      className="text-gray-600"
+                      fieldPath="features.cards[1].text"
+                      objectId="home"
+                    />
                   </CardContent>
                 </Card>
 
@@ -126,12 +158,22 @@ const Index = () => {
                     <div className="mx-auto w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4" aria-hidden="true">
                       <Users className="h-6 w-6 text-purple-600" />
                     </div>
-                    <CardTitle className="text-lg">Professional Network</CardTitle>
+                    <EditableText
+                      text="Professional Network"
+                      as="h3"
+                      className="text-lg"
+                      fieldPath="features.cards[2].title"
+                      objectId="home"
+                    />
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600">
-                      Connect with educators, researchers, and policymakers worldwide.
-                    </p>
+                    <EditableText
+                      text="Connect with educators, researchers, and policymakers worldwide."
+                      as="p"
+                      className="text-gray-600"
+                      fieldPath="features.cards[2].text"
+                      objectId="home"
+                    />
                   </CardContent>
                 </Card>
 
@@ -140,12 +182,22 @@ const Index = () => {
                     <div className="mx-auto w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4" aria-hidden="true">
                       <Globe className="h-6 w-6 text-orange-600" />
                     </div>
-                    <CardTitle className="text-lg">Global Impact</CardTitle>
+                    <EditableText
+                      text="Global Impact"
+                      as="h3"
+                      className="text-lg"
+                      fieldPath="features.cards[3].title"
+                      objectId="home"
+                    />
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600">
-                      Make a difference in civic education across diverse cultural contexts.
-                    </p>
+                    <EditableText
+                      text="Make a difference in civic education across diverse cultural contexts."
+                      as="p"
+                      className="text-gray-600"
+                      fieldPath="features.cards[3].text"
+                      objectId="home"
+                    />
                   </CardContent>
                 </Card>
               </div>
@@ -158,15 +210,21 @@ const Index = () => {
             aria-labelledby="cta-heading"
           >
             <div className="max-w-4xl mx-auto text-center">
-              <h2 
+              <EditableText
+                text="Ready to Join Our Community?"
+                as="h2"
                 id="cta-heading"
                 className="text-3xl md:text-4xl font-bold text-white mb-6"
-              >
-                Ready to Join Our Community?
-              </h2>
-              <p className="text-xl text-blue-50 mb-8">
-                Become part of a global network dedicated to strengthening democracy through education.
-              </p>
+                fieldPath="cta.title"
+                objectId="home"
+              />
+              <EditableText
+                text="Become part of a global network dedicated to strengthening democracy through education."
+                as="p"
+                className="text-xl text-blue-50 mb-8"
+                fieldPath="cta.subtitle"
+                objectId="home"
+              />
               <Button 
                 asChild 
                 size="lg" 
@@ -174,7 +232,12 @@ const Index = () => {
                 className="focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-600"
               >
                 <Link to="/membership" aria-describedby="membership-cta-description">
-                  Explore Membership Options
+                  <EditableText
+                    text="Explore Membership Options"
+                    as="span"
+                    fieldPath="cta.button"
+                    objectId="home"
+                  />
                   <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
                 </Link>
               </Button>

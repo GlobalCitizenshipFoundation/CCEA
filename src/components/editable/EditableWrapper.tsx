@@ -1,5 +1,6 @@
 
 import React from 'react'
+import usePreviewMode from '@/hooks/usePreviewMode'
 
 interface EditableWrapperProps {
   children: React.ReactNode
@@ -16,14 +17,17 @@ const EditableWrapper: React.FC<EditableWrapperProps> = ({
   className = '',
   as: Component = 'div' 
 }) => {
+  const isPreview = usePreviewMode()
   const editableProps: Record<string, any> = {}
-  
-  if (fieldPath) {
-    editableProps['data-sb-field-path'] = fieldPath
-  }
-  
-  if (objectId) {
-    editableProps['data-sb-object-id'] = objectId
+
+  if (isPreview) {
+    if (fieldPath) {
+      editableProps['data-sb-field-path'] = fieldPath
+    }
+
+    if (objectId) {
+      editableProps['data-sb-object-id'] = objectId
+    }
   }
 
   return (
