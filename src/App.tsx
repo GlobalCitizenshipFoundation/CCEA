@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
 import { lazy, Suspense } from 'react';
+import ContentPreview from '@/components/preview/ContentPreview';
 
 // Lazy load pages to reduce initial bundle size
 const Index = lazy(() => import('./pages/Index'));
@@ -46,7 +47,8 @@ function App() {
       <Router>
         <div className="App">
           <Suspense fallback={<PageLoader />}>
-            <Routes>
+            <ContentPreview>
+              <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
@@ -71,6 +73,7 @@ function App() {
               <Route path="/impressum" element={<Impressum />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            </ContentPreview>
           </Suspense>
           <Toaster />
         </div>
