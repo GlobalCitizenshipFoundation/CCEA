@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { UseFormRegister, FieldErrors, UseFormSetValue } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
@@ -9,12 +10,14 @@ interface OrganizationInformationSectionProps {
   register: UseFormRegister<InstitutionalFormData>;
   errors: FieldErrors<InstitutionalFormData>;
   setValue: UseFormSetValue<InstitutionalFormData>;
+  onInputChange: (field: string, value: string) => void;
 }
 
 const OrganizationInformationSection: React.FC<OrganizationInformationSectionProps> = ({
   register,
   errors,
-  setValue
+  setValue,
+  onInputChange
 }) => {
   return (
     <div className="space-y-6">
@@ -27,6 +30,7 @@ const OrganizationInformationSection: React.FC<OrganizationInformationSectionPro
             id="organizationName"
             {...register('organizationName', { required: 'Organization name is required' })}
             placeholder="Your institution or organization name"
+            onChange={(e) => onInputChange('organizationName', e.target.value)}
           />
           {errors.organizationName && (
             <p className="text-sm text-red-600 mt-1">{errors.organizationName.message}</p>
@@ -35,7 +39,10 @@ const OrganizationInformationSection: React.FC<OrganizationInformationSectionPro
 
         <div>
           <Label htmlFor="organizationType">Organization Type *</Label>
-          <RadioGroup onValueChange={(value) => setValue('organizationType', value)}>
+          <RadioGroup onValueChange={(value) => {
+            setValue('organizationType', value);
+            onInputChange('organizationType', value);
+          }}>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="university" id="university" />
               <Label htmlFor="university">University/Higher Education</Label>
@@ -66,12 +73,16 @@ const OrganizationInformationSection: React.FC<OrganizationInformationSectionPro
             type="number"
             {...register('foundedYear')}
             placeholder="2000"
+            onChange={(e) => onInputChange('foundedYear', e.target.value)}
           />
         </div>
 
         <div>
           <Label htmlFor="organizationSize">Organization Size *</Label>
-          <RadioGroup onValueChange={(value) => setValue('organizationSize', value)}>
+          <RadioGroup onValueChange={(value) => {
+            setValue('organizationSize', value);
+            onInputChange('organizationSize', value);
+          }}>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="small" id="small" />
               <Label htmlFor="small">Small (1-50 people)</Label>
@@ -95,6 +106,7 @@ const OrganizationInformationSection: React.FC<OrganizationInformationSectionPro
           type="url"
           {...register('website')}
           placeholder="https://yourorganization.org"
+          onChange={(e) => onInputChange('website', e.target.value)}
         />
       </div>
     </div>

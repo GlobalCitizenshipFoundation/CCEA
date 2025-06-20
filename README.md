@@ -60,6 +60,17 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Environment Variables
+
+Create a `.env` file using `.env.example` as a reference. The following
+variables are required for the Netlify Visual Editor and Sanity CMS:
+
+- `STACKBIT_API_KEY`
+- `VITE_SANITY_PROJECT_ID`
+- `VITE_SANITY_DATASET`
+- `SANITY_STUDIO_PROJECT_ID`
+- `SANITY_STUDIO_DATASET`
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/47f20c23-352e-4f60-9fc2-b4aec0ff1df4) and click on Share -> Publish.

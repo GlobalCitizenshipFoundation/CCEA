@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { UseFormRegister, FieldErrors, UseFormSetValue } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
@@ -9,13 +10,15 @@ interface ContactInformationSectionProps {
   errors: FieldErrors<InstitutionalFormData>;
   setValue: UseFormSetValue<InstitutionalFormData>;
   countries: string[];
+  onInputChange: (field: string, value: string) => void;
 }
 
 const ContactInformationSection: React.FC<ContactInformationSectionProps> = ({
   register,
   errors,
   setValue,
-  countries
+  countries,
+  onInputChange
 }) => {
   return (
     <>
@@ -29,6 +32,7 @@ const ContactInformationSection: React.FC<ContactInformationSectionProps> = ({
               id="primaryContact"
               {...register('primaryContact', { required: 'Primary contact name is required' })}
               placeholder="John Doe"
+              onChange={(e) => onInputChange('primaryContact', e.target.value)}
             />
             {errors.primaryContact && (
               <p className="text-sm text-red-600 mt-1">{errors.primaryContact.message}</p>
@@ -41,6 +45,7 @@ const ContactInformationSection: React.FC<ContactInformationSectionProps> = ({
               id="title"
               {...register('title', { required: 'Title is required' })}
               placeholder="Director of Education"
+              onChange={(e) => onInputChange('title', e.target.value)}
             />
             {errors.title && (
               <p className="text-sm text-red-600 mt-1">{errors.title.message}</p>
@@ -54,6 +59,7 @@ const ContactInformationSection: React.FC<ContactInformationSectionProps> = ({
               type="email"
               {...register('email', { required: 'Email is required' })}
               placeholder="john.doe@organization.org"
+              onChange={(e) => onInputChange('email', e.target.value)}
             />
             {errors.email && (
               <p className="text-sm text-red-600 mt-1">{errors.email.message}</p>
@@ -66,6 +72,7 @@ const ContactInformationSection: React.FC<ContactInformationSectionProps> = ({
               id="phone"
               {...register('phone')}
               placeholder="+1-555-123-4567"
+              onChange={(e) => onInputChange('phone', e.target.value)}
             />
           </div>
         </div>
@@ -81,6 +88,7 @@ const ContactInformationSection: React.FC<ContactInformationSectionProps> = ({
               id="address"
               {...register('address')}
               placeholder="123 Education Street"
+              onChange={(e) => onInputChange('address', e.target.value)}
             />
           </div>
 
@@ -90,6 +98,7 @@ const ContactInformationSection: React.FC<ContactInformationSectionProps> = ({
               id="city"
               {...register('city', { required: 'City is required' })}
               placeholder="Brussels"
+              onChange={(e) => onInputChange('city', e.target.value)}
             />
             {errors.city && (
               <p className="text-sm text-red-600 mt-1">{errors.city.message}</p>
@@ -102,7 +111,10 @@ const ContactInformationSection: React.FC<ContactInformationSectionProps> = ({
               id="country"
               {...register('country', { required: 'Country is required' })}
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              onChange={(e) => setValue('country', e.target.value)}
+              onChange={(e) => {
+                setValue('country', e.target.value);
+                onInputChange('country', e.target.value);
+              }}
             >
               <option value="">Select your country</option>
               {countries.map((country) => (

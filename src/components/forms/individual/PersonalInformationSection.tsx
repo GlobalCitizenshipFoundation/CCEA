@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { UseFormRegister, FieldErrors, UseFormSetValue } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
@@ -9,13 +10,15 @@ interface PersonalInformationSectionProps {
   errors: FieldErrors<IndividualFormData>;
   setValue: UseFormSetValue<IndividualFormData>;
   countries: string[];
+  onInputChange: (field: string, value: string) => void;
 }
 
 const PersonalInformationSection: React.FC<PersonalInformationSectionProps> = ({
   register,
   errors,
   setValue,
-  countries
+  countries,
+  onInputChange
 }) => {
   return (
     <div className="space-y-6">
@@ -28,6 +31,7 @@ const PersonalInformationSection: React.FC<PersonalInformationSectionProps> = ({
             id="firstName"
             {...register('firstName', { required: 'First name is required' })}
             placeholder="John"
+            onChange={(e) => onInputChange('firstName', e.target.value)}
           />
           {errors.firstName && (
             <p className="text-sm text-red-600 mt-1">{errors.firstName.message}</p>
@@ -40,6 +44,7 @@ const PersonalInformationSection: React.FC<PersonalInformationSectionProps> = ({
             id="lastName"
             {...register('lastName', { required: 'Last name is required' })}
             placeholder="Doe"
+            onChange={(e) => onInputChange('lastName', e.target.value)}
           />
           {errors.lastName && (
             <p className="text-sm text-red-600 mt-1">{errors.lastName.message}</p>
@@ -53,6 +58,7 @@ const PersonalInformationSection: React.FC<PersonalInformationSectionProps> = ({
             type="email"
             {...register('email', { required: 'Email is required' })}
             placeholder="john.doe@email.com"
+            onChange={(e) => onInputChange('email', e.target.value)}
           />
           {errors.email && (
             <p className="text-sm text-red-600 mt-1">{errors.email.message}</p>
@@ -65,6 +71,7 @@ const PersonalInformationSection: React.FC<PersonalInformationSectionProps> = ({
             id="phone"
             {...register('phone')}
             placeholder="+1-555-123-4567"
+            onChange={(e) => onInputChange('phone', e.target.value)}
           />
         </div>
 
@@ -74,7 +81,10 @@ const PersonalInformationSection: React.FC<PersonalInformationSectionProps> = ({
             id="country"
             {...register('country', { required: 'Country is required' })}
             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-            onChange={(e) => setValue('country', e.target.value)}
+            onChange={(e) => {
+              setValue('country', e.target.value);
+              onInputChange('country', e.target.value);
+            }}
           >
             <option value="">Select your country</option>
             {countries.map((country) => (
@@ -92,6 +102,7 @@ const PersonalInformationSection: React.FC<PersonalInformationSectionProps> = ({
             id="city"
             {...register('city', { required: 'City is required' })}
             placeholder="Brussels"
+            onChange={(e) => onInputChange('city', e.target.value)}
           />
           {errors.city && (
             <p className="text-sm text-red-600 mt-1">{errors.city.message}</p>
