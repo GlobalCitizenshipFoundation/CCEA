@@ -7,7 +7,9 @@ import Footer from '@/components/Footer';
 import EventRegistrationForm from '@/components/forms/EventRegistrationForm';
 
 const EventRegistration = () => {
-  const { id } = useParams();
+  // The route in App.tsx uses the param name `slug`
+  // so we should read `slug` here instead of `id`
+  const { slug } = useParams();
 
   // This would normally fetch event data based on ID
   // For now, using sample data
@@ -38,7 +40,7 @@ const EventRegistration = () => {
             <ChevronRight className="h-4 w-4" />
             <Link to="/events" className="hover:text-blue-600">Events</Link>
             <ChevronRight className="h-4 w-4" />
-            <Link to={`/events/${id}`} className="hover:text-blue-600">{event.title}</Link>
+            <Link to={`/events/${slug}`} className="hover:text-blue-600">{event.title}</Link>
             <ChevronRight className="h-4 w-4" />
             <span className="text-gray-900">Registration</span>
           </nav>
