@@ -1,5 +1,6 @@
 
 import React from 'react'
+import usePreviewMode from '@/hooks/usePreviewMode'
 
 interface EditableImageProps {
   src: string
@@ -20,14 +21,17 @@ const EditableImage: React.FC<EditableImageProps> = ({
   width,
   height 
 }) => {
+  const isPreview = usePreviewMode()
   const editableProps: Record<string, any> = {}
-  
-  if (fieldPath) {
-    editableProps['data-sb-field-path'] = fieldPath
-  }
-  
-  if (objectId) {
-    editableProps['data-sb-object-id'] = objectId
+
+  if (isPreview) {
+    if (fieldPath) {
+      editableProps['data-sb-field-path'] = fieldPath
+    }
+
+    if (objectId) {
+      editableProps['data-sb-object-id'] = objectId
+    }
   }
 
   return (
