@@ -1,0 +1,9 @@
+{
+  "stackbitConfigPath": "stackbit.config.ts",
+  "cmsName": "sanity",
+  "sanity": {
+    "projectIdEnv": "VITE_SANITY_PROJECT_ID",
+    "datasetEnv": "VITE_SANITY_DATASET"
+  },
+  "siteIdEnv": "NETLIFY_SITE_ID"
+}
